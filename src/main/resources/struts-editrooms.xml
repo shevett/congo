@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditRooms" extends="CONGO-main">
+
+	<action name="coconut/listRooms" class="com.stonekeep.congo.coconut.EditRoom">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/RoomSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editRoom" method="view" class="com.stonekeep.congo.coconut.EditRoom">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditRoomForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateRoom" method="update" class="com.stonekeep.congo.coconut.EditRoom">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listRooms</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditRoomForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteRoom" method="delete" class="com.stonekeep.congo.coconut.EditRoom">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listRooms</result>
+		<result name="input">/WEB-INF/jsp/coconut/RoomSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/createRoom" method="create" class="com.stonekeep.congo.coconut.EditRoom">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listRooms</result>
+	</action>
+
+	</package>
+</struts>

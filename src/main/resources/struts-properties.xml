@@ -1,0 +1,59 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-properties" extends="CONGO-main">
+
+	<action name="coconut/listPropertyConfigurations" method="listPropertyConfigurations" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/PropertyConfigurationSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editPropertyConfiguration" method="editPropertyConfiguration" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/PropertyConfigurationEditor.jsp</result>
+	</action>
+	
+	<action name="coconut/updatePropertyConfiguration" method="updatePropertyConfiguration" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/listPropertyConfigurations</result>
+	</action>
+
+	<action name="coconut/maintEditProperty" method="edit" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/MaintPropertyEdit.jsp</result>
+		<result name="exit" type="redirect">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/maintPropertiesFormButton" method="formButton" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/PropertyConfigurationCreate.jsp</result>
+		<result name="deleted" type="redirectAction">coconut/listPropertyConfigurations</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>	
+
+	<action name="coconut/maintCreatePropertyConfiguration" method="createPropertyConfiguration" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/listPropertyConfigurations</result>
+		<result name="input">/WEB-INF/jsp/coconut/PropertyConfigurationCreate.jsp</result>
+	</action>	
+
+	<action name="coconut/updateEditProperty" method="update" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/maintViewProperties</result>
+	</action>
+
+	<!--  these are the user edits - when editing a registrant itself, and working with their properties  -->
+	<action name="coconut/EditPropertiesForm" method="listProperties" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditPropertiesForm.jsp</result>
+	</action>
+	
+	<action name="coconut/updateProperties" method="updateProperties" class="com.stonekeep.congo.coconut.Properties">
+		<interceptor-ref name="mystack" />
+		<result name="input" type="redirectAction">coconut/EditPropertiesForm</result>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+
+	</package>
+</struts>

@@ -1,0 +1,35 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditDiscountCodess" extends="CONGO-main">
+	
+	<default-interceptor-ref name="admin"/>
+
+	<action name="coconut/listDiscountCodes" class="com.stonekeep.congo.coconut.EditDiscountCodes">
+		<result name="success">/WEB-INF/jsp/coconut/DiscountCodeSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editDiscountCode" method="view" class="com.stonekeep.congo.coconut.EditDiscountCodes">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditDiscountCodesForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateDiscountCode" method="update" class="com.stonekeep.congo.coconut.EditDiscountCodes">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listDiscountCodes</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditDiscountCodesForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteDiscountCode" method="delete" class="com.stonekeep.congo.coconut.EditDiscountCodes">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listDiscountCodes</result>
+		<result name="input">/WEB-INF/jsp/coconut/DiscountCodeSelector.jsp</result>
+	</action>
+	
+	</package>
+</struts>

@@ -1,0 +1,334 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.stonekeep.congo</groupId>
+  <artifactId>congo</artifactId>
+  <version>2.1.2.9-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>CONGO</name>
+
+  <scm>
+	<developerConnection>scm:svn:http://svn.stonekeep.com/svn/congo/v2/trunk</developerConnection>
+  </scm>
+  
+  <properties>
+  	<hibernate.version>3.5.6-Final</hibernate.version>
+  </properties>
+
+  <dependencies>
+  
+     <dependency>
+       <groupId>org.apache.struts</groupId>
+       <artifactId>struts2-json-plugin</artifactId>
+       <version>2.2.1</version>
+	</dependency>
+   
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-spring-plugin</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>javassist </groupId>
+    	<artifactId>javassist</artifactId>
+    	<version>3.8.0.GA</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>3.0.5.RELEASE</version>
+    </dependency>
+    
+    <dependency>
+   		<groupId>org.springframework</groupId>
+   		<artifactId>spring-tx</artifactId>
+   		<version>3.0.5.RELEASE</version>
+	</dependency>
+
+    <dependency>
+      <groupId>org.springframework.ws</groupId>
+      <artifactId>spring-oxm-tiger</artifactId>
+      <version>1.5.4</version>
+    </dependency>
+    
+ 	<dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>3.4.0.GA</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-annotations</artifactId>
+    	<version>3.4.0.GA</version>
+	</dependency>
+	<dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+      <version>3.3.0.ga</version>
+    </dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-search</artifactId>
+		<version>3.1.0.GA</version>
+	</dependency>
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-tools</artifactId>
+		<version>3.2.3.GA</version>
+	</dependency>
+	<dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>3.3.2.GA</version>
+    </dependency> 
+	<dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+      <version>3.2.5.ga</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.transaction</groupId>
+          <artifactId>jta</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <!--  Hibernate requires the slf4j logggging libraries... -->
+    <dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>1.6.1</version>
+	</dependency>
+	
+	<dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-log4j12</artifactId>
+    	<version>1.6.1</version>
+	</dependency>
+	
+	<dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-orm</artifactId>
+    	<version>3.0.5.RELEASE</version>
+	</dependency>
+
+    <dependency>
+      <groupId>com.opensymphony</groupId>
+      <artifactId>xwork</artifactId>
+      <version>2.1.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>c3p0</groupId>
+      <artifactId>c3p0</artifactId>
+      <version>0.9.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.1.2</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock</artifactId>
+      <version>2.5.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-junit4</artifactId>
+      <version>2.5.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+      <version>3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>2.0.3</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>ca.grimoire.maven</groupId>
+      <artifactId>maven-taglib</artifactId>
+      <version>1.1</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>com.lowagie</groupId>
+    	<artifactId>itext</artifactId>
+    	<version>1.3.1</version>
+	</dependency>
+	
+	<dependency>
+ 		<groupId>velocity</groupId>
+  		<artifactId>velocity</artifactId>
+  		<version>1.5</version>
+	</dependency> 
+	
+	<dependency>
+    	<groupId>jfree</groupId>
+    	<artifactId>jfreechart</artifactId>
+    	<version>1.0.13</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>jfree</groupId>
+    	<artifactId>jcommon</artifactId>
+    	<version>1.0.15</version>
+	</dependency>
+	
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <version>2.5.1</version>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+		<version>2.0.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      
+ 		<!--  this will force the deployed app to push to the root context -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>tomcat-maven-plugin</artifactId>
+        <version>1.1</version>
+        <configuration>
+          <path>/</path>
+        </configuration>
+      </plugin>
+      
+      <plugin>
+ 		<groupId>org.mortbay.jetty</groupId>
+ 		<version>6.1.10</version>
+ 		<artifactId>jetty-maven-plugin</artifactId>
+  		<configuration>
+    		<scanIntervalSeconds>0</scanIntervalSeconds>
+  		</configuration>
+	  </plugin>
+
+		<plugin>
+			<groupId>org.zeroturnaround</groupId>
+			<artifactId>jrebel-maven-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>generate-rebel-xml</id>
+					<phase>process-resources</phase>
+					<goals>
+						<goal>generate</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>nimitz.homeport.org</id>
+      <url>file:/var/lib/maven/stoneport.com/releases</url>
+    </repository>
+  </distributionManagement>
+</project>

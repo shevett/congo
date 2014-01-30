@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditDepartments" extends="CONGO-main">
+
+	<action name="coconut/listDepartments" class="com.stonekeep.congo.coconut.EditDepartment">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/DepartmentSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editDepartment" method="view" class="com.stonekeep.congo.coconut.EditDepartment">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditDepartmentForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateDepartment" method="update" class="com.stonekeep.congo.coconut.EditDepartment">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listDepartments</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditDepartmentForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteDepartment" method="delete" class="com.stonekeep.congo.coconut.EditDepartment">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listDepartments</result>
+		<result name="input">/WEB-INF/jsp/coconut/DepartmentSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/createDepartment" method="create" class="com.stonekeep.congo.coconut.EditDepartment">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listDepartments</result>
+	</action>
+
+	</package>
+</struts>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://congo.stonekeep.com/configuration-schema"
+  xmlns="http://www.w3.org/2001/XMLSchema" xmlns:conf="http://congo.stonekeep.com/configuration-schema"
+  elementFormDefault="qualified">
+  <element name="schema" type="conf:configurationSchema">
+    <annotation>
+      <documentation>
+        The root of a configuration schema. Describes the
+        schema and lists off
+        all of its categories.
+      </documentation>
+    </annotation>
+  </element>
+
+  <complexType name="configurationSchema">
+    <sequence>
+      <element minOccurs="0" name="description" type="conf:description">
+        <annotation>
+          <documentation>
+            A description for the schema as a whole.
+            Configuration UIs can display this when showing the
+            configuration.
+          </documentation>
+        </annotation>
+      </element>
+
+      <element minOccurs="0" maxOccurs="unbounded" name="category"
+        type="conf:category">
+        <annotation>
+          <documentation>
+            Categories group items into logical groups for
+            display.
+          </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="category">
+    <sequence>
+      <element minOccurs="0" name="description" type="conf:description">
+        <annotation>
+          <documentation>
+            A description for the configuration group.
+            Configuration UIs can display this when showing the group.
+          </documentation>
+        </annotation>
+      </element>
+
+      <element minOccurs="0" maxOccurs="unbounded" name="entry"
+        type="conf:entry">
+        <annotation>
+          <documentation>
+            A single configuration item.
+          </documentation>
+        </annotation>
+      </element>
+    </sequence>
+
+    <attribute name="name" type="string" use="required">
+      <annotation>
+        <documentation>
+          A human-readable name for the category.
+        </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="entry">
+    <sequence>
+      <element minOccurs="0" name="description" type="conf:description">
+        <annotation>
+          <documentation>
+            A optional description for an individual
+            configuration entry. Configuration UIs can display this to
+            the user as documentation for the item.
+          </documentation>
+        </annotation>
+      </element>
+
+      <element minOccurs="0" name="values" type="conf:values">
+        <annotation>
+          <documentation>
+            A set of options for a "select"-typed
+            configuration entry. Configuration UIs expect the user to
+            select exactly one option out of the list of "value"
+            elements provided.
+          </documentation>
+        </annotation>
+      </element>
+    </sequence>
+
+    <attribute name="key" type="string" use="required">
+      <annotation>
+        <documentation>
+          The configuration key associated with the item.
+        </documentation>
+      </annotation>
+    </attribute>
+
+    <attribute name="name" type="string" use="required">
+      <annotation>
+        <documentation>
+          A human-readable name for the configuration item.
+        </documentation>
+      </annotation>
+    </attribute>
+
+    <attribute name="type" type="conf:entryType" use="required">
+      <annotation>
+        <documentation>
+          The input and validation type for the
+          configuration item. If this is set to 'select', there must
+          also be "values" child element.
+        </documentation>
+      </annotation>
+    </attribute>
+
+    <attribute name="default" type="string" use="optional">
+      <annotation>
+        <documentation>
+          An optional default value to fill in when the
+          configuration being displayed has no value for a given key.
+        </documentation>
+      </annotation>
+    </attribute>
+
+    <attribute name="optional" use="optional" default="false"
+      type="boolean">
+      <annotation>
+        <documentation>
+          Indicates that a given item can be configured,
+          but doesn't have to be.
+        </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="values">
+    <sequence>
+      <element maxOccurs="unbounded" name="value" type="conf:valueOption">
+        <annotation>
+          <documentation>
+            An option for the associated configuration
+            entry.
+          </documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="valueOption">
+    <simpleContent>
+      <extension base="string">
+        <attribute name="label" type="string">
+          <annotation>
+            <documentation>
+              A human-readable label for the value.
+            </documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <complexType name="description">
+    <simpleContent>
+      <extension base="string"/>
+    </simpleContent>
+  </complexType>
+
+  <simpleType name="entryType">
+    <restriction base="string">
+      <!--
+        I've intentionally omitted checkboxes here because handling them
+        in HTTP is somewhat frustrating. TODO: consider adding them.
+      -->
+      <enumeration value="text"/>
+      <enumeration value="password"/>
+      <enumeration value="select"/>
+    </restriction>
+  </simpleType>
+
+</schema>

@@ -1,0 +1,47 @@
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<table>
+	<tr>
+		<td>Name:</td>
+		<td width=80%><s:textfield name="event.name" /></td>
+	</tr>
+	<tr>
+		<td>Description:</td>
+		<td width=80%><s:textfield name="event.description" /></td>
+	</tr>
+	<tr>
+		<td>Start (MM/dd/yy hh:mm am/pm):</td>
+		<td><s:textfield name="event.start" /></td>
+	</tr>
+	<tr>
+		<td>End (MM/dd/yy hh:mm am/pm):</td>
+		<td><s:textfield name="event.end" /></td>
+	</tr>
+	<tr>
+		<td>Location:</td>
+		<td><s:textfield name="event.location" /></td>
+	</tr>
+	<tr>
+		<td>Maximum Attendees:</td>
+		<td><s:textfield name="event.maximumAttendees" /></td>
+	</tr>
+	<tr>
+		<td>Price:</td>
+		<td>$<s:textfield name="event.price" /></td>
+	</tr>
+	<tr>
+		<td>Type:</td>
+		<td><s:textfield name="event.type" /></td>
+	</tr>
+	<tr>
+		<td>Category:</td>
+		<td><s:textfield name="event.category" /></td>
+	</tr>
+	<tr>
+		<td>Owner RID:</td>
+		<td><s:textfield name="event.owner" /></td>
+	</tr>
+	<tr>
+		<td>Details:</td>
+		<td><s:textarea name="event.detail" cols="60" rows="10" /></td>
+	</tr>
+</table>

@@ -1,0 +1,101 @@
+/* 	Super Simple Admin Theme By Jeff Adams		*/
+
+
+/* ----------------------------
+		MAIN NAVIGATION
+------------------------------- */
+#nav			{
+	height: 30px;
+	padding-left: 50px;
+	/* 	THEME COLOUR - HOW TO CHANGE THEME
+	
+	1.	Comment out the theme that is active, you can do this by
+		using the "/*" before the line of css
+		
+	2. 	Take the comment off of the theme you want to use.
+	
+	3. 	Save the file and enjoy!
+	
+	*/
+	
+		background-color: #56A9B9;	 /* THEME 1 AQUA 	*/
+	 /*background-color: #009933;		THEME 2 GREEN 	*/
+	/*background-color: #990000;		 THEME 3 RED 	*/
+	/*  background-color: #0000CC;		THEME 4 BLUE 	*/
+	/* background-color: #FFCC00;	 	THEME 6 YELLOW 	*/
+	/* ackground-color: #660099;	 	THEME 7 PURPLE 	*/
+	/*background-color: #FF33FF; 	 	THEME 8 PINK 	*/
+	 /*background-color: #666666;	/* THEME 9 GREY 	*/
+	
+	
+}
+	#nav li {
+	padding-right: 12px;
+	padding-left: 12px;
+	margin: 0px;
+	float: left;
+	height: 30px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #131C25;
+	line-height: 30px;
+	position:relative;
+	}
+		/*	class "active" is used to highlight the current/active link	*/
+		#nav li.active {
+		background-color: #FFFFFF;
+		border-top-width: 4px;
+		border-top-style: solid;
+		border-top-color: #FFFFFF;
+		margin-top: -4px;
+		border-right-width: 1px;
+		border-right-style: solid;
+		border-right-color: #FFFFFF;
+		}
+	
+	
+
+	#nav a {
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: none;
+	}
+	
+	/*	class "active" is used to highlight the current/active link	*/
+	#nav a.active {
+	color: #131C25;
+	text-decoration: none;
+	}
+	
+	#nav a:hover	{text-decoration:underline;}
+
+
+/* ----------------------------
+		SUB NAVIGATION
+------------------------------- */
+
+#subnav			{
+	height: 30px;
+	background-color: #FFFFFF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #d6d6d6;
+	clear: both;
+	padding-left: 50px;
+	padding-bottom: 5px;
+}
+	#subnav li 			{ float: left;line-height: 30px;}
+	#subnav a 			{ 
+		color: #B5B5B5;
+		font-size: 11px;
+		padding-right: 10px;
+		padding-left: 12px;
+		text-decoration: none;
+	}
+	
+	/*	class "active" is used to highlight the current/active link	*/
+	#subnav a.active 	{color: #131C25;font-weight: bold;}
+	#subnav a:hover 	{ color: #131C25;}
+	

@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditLayouts" extends="CONGO-main">
+
+	<action name="coconut/listLayouts" class="com.stonekeep.congo.coconut.EditLayout">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/LayoutSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editLayout" method="view" class="com.stonekeep.congo.coconut.EditLayout">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditLayoutForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateLayout" method="update" class="com.stonekeep.congo.coconut.EditLayout">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listLayouts</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditLayoutForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteLayout" method="delete" class="com.stonekeep.congo.coconut.EditLayout">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listLayouts</result>
+		<result name="input">/WEB-INF/jsp/coconut/LayoutSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/createLayout" method="create" class="com.stonekeep.congo.coconut.EditLayout">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listLayouts</result>
+	</action>
+
+	</package>
+</struts>

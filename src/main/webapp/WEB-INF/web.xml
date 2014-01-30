@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <context-param>
+    <param-name>log4j.xml.url</param-name>
+    <param-value>classpath:log4j.default.xml</param-value>
+  </context-param>
+
+  <listener>
+    <!--
+      This must be BEFORE anything else that uses log4j, because it's
+      responsible for initializing log4j.
+    -->
+    <listener-class>com.stonekeep.congo.log4j.Log4jBootstrapListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>
+      org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>

@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditCategories" extends="CONGO-main">
+	
+	<action name="coconut/listCategories" class="com.stonekeep.congo.coconut.EditCategory">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/CategorySelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editCategory" method="view" class="com.stonekeep.congo.coconut.EditCategory">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditCategoryForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateCategory" method="update" class="com.stonekeep.congo.coconut.EditCategory">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listCategories</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditCategoryForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteCategory" method="delete" class="com.stonekeep.congo.coconut.EditCategory">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listCategories</result>
+		<result name="input">/WEB-INF/jsp/coconut/CategorySelector.jsp</result>
+	</action>
+	
+	<action name="coconut/createCategory" method="create" class="com.stonekeep.congo.coconut.EditCategory">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listCategories</result>
+	</action>
+
+	</package>
+</struts>

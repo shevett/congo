@@ -1,0 +1,43 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-editregistrationtypes" extends="CONGO-main">
+	
+	<default-interceptor-ref name="admin"/>
+
+	<action name="coconut/listRegistrationTypes" class="com.stonekeep.congo.coconut.EditRegistrationType">
+		<result name="success">/WEB-INF/jsp/coconut/RegistrationTypesSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/importRegistrationTypesSelector" class="com.stonekeep.congo.coconut.ImportRegistrationType">
+		<result name="success">/WEB-INF/jsp/coconut/RegistrationTypesImportSelector.jsp</result>
+	</action>
+
+	<action name="coconut/editRegistrationTypes" method="view" class="com.stonekeep.congo.coconut.EditRegistrationType">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditRegistrationTypeForm.jsp</result>
+		<result name="import" type="redirectAction">coconut/importRegistrationTypesSelector</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/deleteRegistrationTypes" method="delete" class="com.stonekeep.congo.coconut.EditRegistrationType">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listRegistrationTypes.action</result>
+	</action>
+
+	<action name="coconut/updateEditRegistrationTypes" method="update" class="com.stonekeep.congo.coconut.EditRegistrationType">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listRegistrationTypes</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditRegistrationTypeForm.jsp</result>
+	</action>
+
+	<action name="coconut/editRegistrantTypesOrder" method="setOrder" class="com.stonekeep.congo.coconut.EditRegistrationType">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="chain">coconut/listRegistrationTypes</result>
+	</action>	
+	
+	</package>
+</struts>

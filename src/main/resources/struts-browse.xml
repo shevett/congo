@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-browse" extends="CONGO-main">
+	
+	<action name="coconut/processBrowse" method="process" class="com.stonekeep.congo.coconut.Browse">
+		<interceptor-ref name="mystack" />
+		<result name="exit" type="redirectAction">coconut/Home</result>
+		<result name="success">/WEB-INF/jsp/coconut/Browse.jsp</result>
+	</action>
+	
+	</package>
+</struts>

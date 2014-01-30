@@ -1,0 +1,172 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-registrantops" extends="CONGO-main">
+	
+	<action name="coconut/showLinks" class="com.stonekeep.congo.coconut.EditLinks">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/LinksForm.jsp</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/addLink" method="addLink" class="com.stonekeep.congo.coconut.EditLinks">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/showLinks</result>
+	</action>
+	
+	<action name="coconut/unLink" method="unLink" class="com.stonekeep.congo.coconut.EditLinks">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/showLinks</result>
+	</action>
+	
+	<action name="coconut/subscribeRegistrant" method="subscribe"	class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+
+	<action name="coconut/unsubscribeRegistrant" method="unsubscribe" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/registerRegistrant" method="register" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+
+	<action name="coconut/voidRegistrant" method="voidregistration" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/transferRegistrant" method="transferregistration" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="input">/WEB-INF/jsp/coconut/TransferRegistrantForm.jsp</result>
+	</action>
+
+	<action name="coconut/checkinRegistrant" method="checkin" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+
+	<action name="coconut/uncheckinRegistrant" method="uncheckin" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/repairRegistrant" method="repair" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<!--  Generating templates -->
+	<action name="coconut/previewEmail" method="preview" class="com.stonekeep.congo.coconut.SendMail">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/SendMailPreviewForm.jsp</result>
+	</action>
+	
+	<action name="coconut/postReview" method="sendMail" class="com.stonekeep.congo.coconut.SendMail">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="input" type="chain">coconut/previewEmail</result>
+	</action>
+	
+	<!--  Invoices stuff  -->
+	
+	<action name="coconut/invoiceaddRegistrant" method="invoiceAdd" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+		<result name="input" type="chain">coconut/invoiceaddRegistrant?invoiceAdd</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/invoiceView" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+	</action>
+	
+	<action name="coconut/invoiceBrowse" method="browse" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceBrowseForm.jsp</result>
+	</action>
+	
+	<action name="coconut/invoiceSelect" method="select" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+		<result name="registrant" type="redirectAction">coconut/gotoUser</result>
+		<result name="input" type="chain">coconut/invoiceBrowse</result>
+		<result name="exit" type="redirectAction">coconut/Home</result>
+	</action>
+	
+	<action name="coconut/invoiceDiscard" method="discard" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/Home</result>
+	</action>
+	
+	<action name="coconut/invoiceProcess" method="process" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/Home</result>
+		<result name="registrant" type="redirectAction">coconut/gotoUser</result>
+		<result name="browse" type="redirectAction">coconut/invoiceBrowse</result>
+		<result name="input">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+	</action>
+	
+	<action name="coconut/invoiceDeleteItem" method="deleteItem" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+	</action>
+	
+	<action name="coconut/invoiceMarkWritein" method="markWritein" class="com.stonekeep.congo.coconut.Invoices">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/InvoiceReviewForm.jsp</result>
+	</action>
+	
+	<action name="coconut/printBadge" class="com.stonekeep.congo.coconut.PrintBadge">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="input">/WEB-INF/jsp/coconut/PrintBadgeForm.jsp</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+		<result name="preview" type="redirectAction">
+			<param name="actionName">coconut/printPreview</param>
+			<param name="parse">true</param>
+			<param name="rid">${r.rid}</param>
+		</result>
+	</action>
+	
+	<action name="coconut/setupPrintBadge" method="setupPrintBadge" class="com.stonekeep.congo.coconut.PrintBadge">
+		<result name="success">/WEB-INF/jsp/coconut/PrintBadgeForm.jsp</result>
+	</action>
+	
+	<action name="coconut/printPreview" class="com.stonekeep.congo.coconut.PreviewBadge">
+		<interceptor-ref name="mystack"/>
+	</action>
+	
+	<action name="coconut/mergeRegistrantPreview" method="mergeRegistrantPreview" class="com.stonekeep.congo.coconut.Merge">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/MergeRegistrantPreviewForm.jsp</result>
+		<result name="input">/WEB-INF/jsp/coconut/MergeRegistrantForm.jsp</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/mergeRegistrantProcess" method="mergeRegistrantProcess" class="com.stonekeep.congo.coconut.Merge">
+		<interceptor-ref name="mystack" />
+		<result name="exit">/WEB-INF/jsp/coconut/MergeResultForm.jsp</result>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>		
+	</action>
+	
+	<action name="coconut/mergeRegistrantExit" method="mergeExit" class="com.stonekeep.congo.coconut.Merge">
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+		
+	<!-- Registrant operations within reg zoom that may require preloads -->
+	
+	<action name="coconut/setupRegistration" class="com.stonekeep.congo.coconut.Operations">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/RegisterRegistrantForm.jsp</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+	</action>
+		
+	</package>
+</struts>

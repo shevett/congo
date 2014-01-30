@@ -1,0 +1,66 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-editevents" extends="CONGO-main">
+	
+	<default-interceptor-ref name="admin"/>
+	
+	<action name="coconut/createEvent" method="create" class="com.stonekeep.congo.coconut.EditEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/listEvents</result>
+	</action>
+	
+	<action name="coconut/editEvent" class="com.stonekeep.congo.coconut.EditEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditEventForm.jsp</result>
+	</action>
+
+	<action name="coconut/postEditEvent" method="update" class="com.stonekeep.congo.coconut.EditEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/listEvents</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditEventForm.jsp</result>
+		<result name="cancel" type="redirectAction">coconut/listEvents</result>
+	</action>
+	
+	<action name="coconut/listEvents" method="list" class="com.stonekeep.congo.coconut.EditEvent">
+		<result name="success">/WEB-INF/jsp/coconut/EventSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/activateEvent" method="activate" class="com.stonekeep.congo.coconut.SelectEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/listEvents</result>
+	</action>
+
+	<action name="coconut/selectEvent" method="select" class="com.stonekeep.congo.coconut.SelectEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/listEvents</result>
+	</action>
+	
+	
+	<action name="coconut/deleteEvent" class="com.stonekeep.congo.coconut.EditEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EventPromptforDelete.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteEventProcess" method="delete" class="com.stonekeep.congo.coconut.EditEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="cancel" type="redirectAction">coconut/listEvents</result>
+		<result name="success" type="redirectAction">coconut/listEvents</result>
+	</action>
+	
+	<action name="coconut/selectEvent" method="select" class="com.stonekeep.congo.coconut.SelectEvent">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/listEvents</result>
+	</action>
+	
+	</package>
+</struts>

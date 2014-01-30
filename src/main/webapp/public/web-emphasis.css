@@ -1,0 +1,270 @@
+/*
+* ---------------------------------------------------
+* $Id$
+* ---------------------------------------------------
+* This CSS file is the 'default' settings for the public
+* webpages.  Any of these settings can be overridden in the
+* Stylesheet section of the convention editor.
+* ---------------------------------------------------
+*/
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	margin: 0;
+	background: #ffffff;
+}
+
+.required {
+	color: #ff0000;
+}
+
+/* The header is the nice block along the top of the page that is used to introduce the section... */
+div.header {
+	color: #fffbe9;
+	background-color: #305050;
+	margin-left: 00px;
+	margin-top: 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #c0c0c0;
+	text-align: left;
+	padding: 5px 10px;
+}
+
+/* The main blocks that are on the home page */
+
+.title {
+	font-family: Tahoma, Geneva, Arial, sans-serif;
+	font-size: 150%;
+	color:#0066CC;
+}
+
+.box-green .title {font-size: 200%; font-weight:bold;}
+	
+div.title a:visited, div.title a:hover, div.title a:active, div.title a:link {
+	text-align: left;
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+div.comment {
+	font-style:italic;
+	text-align: left;
+	padding-top: 8px;
+}
+
+div.description {
+	font-size: small;
+	text-align: left;
+}
+
+div.location {
+	font-size: small;
+	text-align: left;
+}
+
+div.dates {
+	font-size: small;
+	text-align: right;
+	float: right;
+}
+
+div.message {
+	font-size: medium;
+	color: #bb2020;
+}
+
+/* Input forms - anything that has form elements in it. */
+div.inputform {
+	margin: 20px;
+	align: center;
+}
+
+/* If you wnat the forms to look a little better, toss in a formbody in the block */
+div.formbody {
+	padding: 20px;
+}
+
+/* The buttons bar */
+div.buttonbar {
+	clear: both; color : #fffbe9;
+	background-color: #C6D2DD;
+	margin: 20px;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #c0c0c0;
+	text-align: right;
+	padding: 5px 10px 5px 10px;
+	color: #fffbe9;
+}
+
+/* Buttons... */
+input.webbutton { 
+	color:#000; 
+	font: bold 85% Verdana, Arial, Helvetica, sans-serif;
+	padding-bottom:2px;
+	background-color: #EDF5DF;  
+	border:1px solid; 
+	border-color: #696 #363 #363 #696;
+	height:24px;
+	vertical-align: center;
+}
+
+input[type="submit"].webbutton:active { 
+	color:#000; 
+	font: bold 85% Verdana, Arial, Helvetica, sans-serif;
+	padding-bottom:2px;
+	background-color: #a0a0d5;  
+	border:1px solid; 
+	border-color: #696 #363 #363 #696;
+	height:24px;
+	vertical-align: center;
+} 
+
+/* footer text */
+
+div.footer {
+	color: #808080;
+	background-color: #e9e9e9;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #c0c0c0;
+	margin: 40px 0px 10px 0px;
+	padding: 5px 20px;
+}
+
+/* Section stuff */
+div.sectiontitle {
+	text-align: left;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-color: #c0c0c0;
+	margin-bottom: 15px;
+}
+
+div.sectionbody {
+	text-align: left;
+	margin: 20px;
+}
+
+table.sectiontable {
+	border-style: none;
+}
+
+div.clear {
+	clear: both;
+}
+
+div.warning {
+	color: #df4040;
+}
+
+td,th,tr {
+	font-size: small;
+}
+
+td#mandatory {
+	color: blue;
+}
+
+th {
+	font-weight: bold;
+	text-align: left;
+}
+
+/* Green rounded box... */
+.box-green {
+	background: #849eb7 url("graphics/graphics-emphasis/blue-gradient-bg.jpg") top left repeat-x;
+	margin: 10px 20px;
+}
+
+.boxtop-green {
+	background: url("graphics/graphics-emphasis/ne-white.png") no-repeat top right;
+}
+
+.boxtop-green div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-emphasis/nw-white.png") no-repeat top left;
+}
+
+.boxbottom-green {
+	background: url("graphics/graphics-emphasis/se-white.png") no-repeat bottom right;
+}
+
+.boxbottom-green div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-emphasis/sw-white.png") no-repeat bottom left;
+}
+
+.boxcontent-green {
+	padding: 5px 20px;
+	color: #ffffff
+}
+
+/* Orange rounded box... */
+.box-orange {
+	background: #EBB9AB;
+	margin: 10px;
+}
+
+.boxtop-orange {
+	background: url("graphics/graphics-default/ne-orange.gif") no-repeat top right;
+}
+
+.boxtop-orange div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-default/nw-orange.gif") no-repeat top left;
+}
+
+.boxbottom-orange {
+	background: url("graphics/graphics-default/se-orange.gif") no-repeat bottom right;
+}
+
+.boxbottom-orange div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-default/sw-orange.gif") no-repeat bottom left;
+}
+
+.boxcontent-orange {
+	padding: 0px 10px 0px 10px;
+	color: #000000
+}
+
+/* grey rounded box... */
+.box-grey {
+	background: #E8E8E8;
+	margin: 10px 20px;
+}
+
+.boxtop-grey {
+	background: url("graphics/graphics-emphasis/ne-white.png") no-repeat top right;
+}
+
+.boxtop-grey div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-emphasis/nw-white.png") no-repeat top left;
+}
+
+.boxbottom-grey {
+	background: url("graphics/graphics-emphasis/se-white.png") no-repeat bottom right;
+}
+
+.boxbottom-grey div {
+	font-size: 0;
+	height: 10px;
+	background: url("graphics/graphics-emphasis/sw-white.png") no-repeat bottom left;
+}
+
+.boxcontent-grey {
+	padding: 2px 15px;
+	color: #000000
+}
+
+.boxcontent-grey input{
+	margin: 4px 0px 8px 0px;
+}

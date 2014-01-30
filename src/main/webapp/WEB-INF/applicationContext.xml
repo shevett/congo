@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx.xsd"
+	default-lazy-init="true">
+
+	<!-- Configuration management and congo startup is detailed enough to deserve 
+		its own file. -->
+	<import resource="databaseInstallation.xml" />
+
+	<!-- A quick note about naming conventions: every bean in this spring context 
+		has a qualified name, like a Java class would. In cases where the class name 
+		also clearly identifies the object, I've skipped the id= attribute of the 
+		bean definition; the default id is the class name. There is no single "right" 
+		Spring naming convention, but the alternative, a single, flat namespace, 
+		gets messy quickly in my experience. -o -->
+
+	<!-- Action factories -->
+	<!-- These have a scope specified because, by default, Spring creates a 
+		single instance of each bean. Since Struts2 reconfigures the action handler 
+		after receiving it from Spring, we really, *really* want to create a new, 
+		freshly-initialized handler for each request so that stale values from old 
+		requests don't persist into the new one. In this case we use the request 
+		scope, so that if (for some reason) something else needs a reference to the 
+		action, it gets the same one Struts2 configured for the current request. -->
+	<!-- The naming finesse mentioned above comes into play here - by identifying 
+		beans for actions using the class name for the action implementation, no 
+		changes are required on the Struts side to switch the action from Struts-managed 
+		to Spring-managed. -->
+	<bean class="com.stonekeep.congo.coconut.Browse" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+	</bean>
+
+	<bean class="com.stonekeep.congo.coconut.CreateRegistrant" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.AddressDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.EditRegistrant" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+	</bean>
+	<bean id="com.stonekeep.congo.coconut.EditRegistrantAddress"
+		class="com.stonekeep.congo.coconut.EditContact" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.AddressDAO" />
+	</bean>
+	<bean id="com.stonekeep.congo.coconut.EditRegistrantEmail" class="com.stonekeep.congo.coconut.EditContact"
+		scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+	</bean>
+	<bean id="com.stonekeep.congo.coconut.EditRegistrantPhone" class="com.stonekeep.congo.coconut.EditContact"
+		scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.EditRegistrationType"
+		scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.DiscountCodeDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.Login" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO" />
+		<property name="keyname" value="${keyname}" />
+		<property name="keytext" value="${keytext}" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.LoadUser" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.Operations" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.Properties" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.EditTemplate" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.TemplateDAO" />
+	</bean>
+	<!-- <bean class="com.stonekeep.congo.coconut.EditEvent" scope="request"> 
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO"/> </bean> -->
+	<bean class="com.stonekeep.congo.coconut.EditDiscountCodes" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.DiscountCodeDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.LookupRegistrant" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.builders.RegistrantDAOBuilder" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+	</bean>
+	
+	<bean class="com.stonekeep.congo.coconut.Invoices" scope="request"> 
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO"/> 
+		<constructor-arg ref="com.stonekeep.congo.payments.InvoiceUtilities" /> 
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO"/> 
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO"/> 
+		<constructor-arg ref="com.stonekeep.congo.coconut.Operations"/> 
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO"/> 
+		<constructor-arg ref="com.stonekeep.congo.dao.TemplateDAO"/> 
+		<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO"/>
+		<constructor-arg ref="com.stonekeep.congo.coconut.SendMail"/> 
+	</bean>
+		
+	<bean class="com.stonekeep.congo.coconut.ShowHistory" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.web.WebActions" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+		<constructor-arg ref="com.stonekeep.congo.payments.InvoiceUtilities" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.AddressDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.LinkDAO" />
+	</bean>
+
+	<bean class="com.stonekeep.congo.web.Links" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.LinkDAO" />
+		<constructor-arg ref="com.stonekeep.congo.util.SMTP" />
+	</bean>
+
+	<bean class="com.stonekeep.congo.web.Invoices" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.util.GenerateMail" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.util.SMTP" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+	</bean>
+ 	<bean class="com.stonekeep.congo.coconut.SendMail">
+		<constructor-arg ref="com.stonekeep.congo.util.SMTP" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.TemplateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.util.SMTP">
+		<constructor-arg ref="com.stonekeep.congo.dao.TemplateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.web.Paypal" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.payments.InvoiceUtilities" />
+		<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.PreviewBadge" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.web.CSSFetcher">
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.interceptors.SessionChecker">
+		<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.Merge">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+
+	<bean class="com.stonekeep.congo.payments.InvoiceUtilities">
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.coconut.SendMail" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.DeleteRegistrant" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+	</bean>
+	
+	<!--  Really hate that I have to manually define this.  When I added SendMail, 
+		it started throwing errors about needing an init() constructor, so I have
+		to manually define it here.  Grr -->
+	<bean class="com.stonekeep.congo.importers.Dispatcher" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrantDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.NoteDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+		<constructor-arg ref="com.stonekeep.congo.coconut.SendMail" />
+	</bean>
+
+	<!-- Reports -->
+	<bean class="com.stonekeep.congo.reports.RegistrantStatusReport"
+		scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.RegistrationTypeDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.reports.AfterEventExport" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.builders.RegistrantDAOBuilder" />
+		<!-- <property name="cid" value="${preferredcid}"/> -->
+	</bean>
+	<!-- <bean class="com.stonekeep.congo.coconut.SendEmail"> -->
+	<bean class="com.stonekeep.congo.coconut.SendMail">
+		<!-- <property name="cid" value="${preferredcid}"/> -->
+	</bean>
+	<bean class="com.stonekeep.congo.reports.ByDate" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.reports.SalesbyType" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.InvoiceDAO" />
+	</bean>
+	<!-- <bean class="com.stonekeep.congo.reports.Properties" scope="request"> 
+		<constructor-arg ref="com.stonekeep.congo.dao.PropertyDAO"/> <property name="cid" 
+		value="${preferredcid}"/> <property name="dataSource" ref="com.stonekeep.congo.database.Pool"/> 
+		</bean> -->
+	<bean class="com.stonekeep.congo.reports.Notices" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.NoteDAO" />
+		<!-- <property name="cid" value="${preferredcid}"/> -->
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.reports.ActivityReport" scope="request">
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.coconut.MaintenanceChecker"
+		scope="request">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+
+	<!-- DAOs -->
+	<bean class="com.stonekeep.congo.dao.SessionDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.VenueDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.RoomDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.CategoryDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.DepartmentDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.LayoutDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.TemplateDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.AddressDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.ConventionDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.EmailDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.NoteDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.DiscountCodeDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.PhoneDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.RegistrantDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.AddressDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.NoteDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.RegistrationTypeDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.StateDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.HistoryDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.PropertyDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.InvoiceDAO">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.DiscountCodeDAO" />
+	</bean>
+	<bean class="com.stonekeep.congo.dao.LinkDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<!-- <property name="cid" value="${preferredcid}"/> -->
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean class="com.stonekeep.congo.dao.SettingDAO">
+		<property name="dataSource" ref="com.stonekeep.congo.database.Pool" />
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- Builders - classes that return instances of other things -->
+	<bean class="com.stonekeep.congo.builders.RegistrantDAOBuilder">
+		<constructor-arg ref="com.stonekeep.congo.database.Pool" />
+		<constructor-arg ref="com.stonekeep.congo.dao.StateDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.AddressDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.EmailDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.NoteDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
+		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
+	</bean>
+
+	<bean id="propertyPlaceholderConfigurer"
+		class="com.stonekeep.congo.config.LoggingPropertyPlaceholderConfigurer">
+<!-- 		<property name="locationUri" value="{servletContext.contextPath}/webServices" />
+ -->		<property name="location" value="file:/opt/congo/#{servletContext.contextPath}/congo.properties" />
+	</bean>
+	
+	
+
+	<!-- Data sources -->
+
+	<bean id="com.stonekeep.congo.database.Pool" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+
+		<property name="testConnectionOnCheckout" value="true" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="30" />
+		<property name="maxIdleTime" value="360" />
+		<property name="maxIdleTimeExcessConnections" value="120" />
+
+		<!-- This is pulling configuration params via JVM parameters. use -Dcongo.user=bob 
+			to config -->
+		<!-- <property name="jdbcUrl" value="jdbc:mysql://localhost/" /> -->
+		<!-- <property name="jdbcUrl" value="#{ systemProperties['congo.jdbcurl'] 
+			}" /> <property name="user" value="#{ systemProperties['congo.user'] }" /> 
+			<property name="password" value="#{ systemProperties['congo.password'] }" 
+			/> -->
+
+		<property name="jdbcUrl" value="${congo.jdbcurl}" />
+		<property name="user" value="${congo.user}" />
+		<property name="password" value="${congo.password}" />
+	</bean>
+
+	<!-- hibernate configuration -->
+
+	<tx:annotation-driven transaction-manager="txManager" />
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref bean="com.stonekeep.congo.database.Pool" />
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.stonekeep.congo.data.Category</value>
+				<value>com.stonekeep.congo.data.Department</value>
+				<value>com.stonekeep.congo.data.Layout</value>
+				<value>com.stonekeep.congo.data.Link</value>
+				<value>com.stonekeep.congo.data.Room</value>
+				<value>com.stonekeep.congo.data.Session</value>
+				<value>com.stonekeep.congo.data.Setting</value>
+				<value>com.stonekeep.congo.data.Venue</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.connection.release_mode">on_close</prop>
+				<prop key="hibernate.id.new_generator_mappings">true</prop>
+
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+				<prop key="hibernate.jdbc.batch_size">501</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

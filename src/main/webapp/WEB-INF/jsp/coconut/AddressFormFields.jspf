@@ -1,0 +1,43 @@
+<%@ taglib prefix="s" uri="/struts-tags"%>
+
+<s:hidden name="contact.rid" />
+<div class="menuboxes">
+<table>
+	<tr>
+		<td>Location</td>
+		<td><s:select name="contact.location" headerKey="-1"
+			headerValue="Select Location"
+			list="#{'Home':'Home', 'Work':'Work', 'Mobile':'Mobile'}"
+			required="true" /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">Address</td>
+		<td><s:textfield name="contact.line1" size="40" maxlength="40"/></td>
+	</tr>
+	<tr>
+		<!-- Rowspan'ed cell here -->
+		<td><s:textfield name="contact.line2" size="40" maxlength="40" /></td>
+	</tr>
+	<tr>
+		<td>City</td>
+		<td><s:textfield name="contact.city" size="40" maxlength="40"/></td>
+	</tr>
+	<tr>
+		<td>State/Province</td>
+		<td><s:textfield name="contact.state" size="20" maxlength="20" /></td>
+	</tr>
+	<tr>
+		<td>Country</td>
+		<td><s:textfield name="contact.country" size="40"  maxlength="40"/></td>
+	</tr>
+	<tr>
+		<td>ZIP/Postal Code</td>
+		<td><s:textfield name="contact.zipcode" size="10" maxlength="10"/></td>
+	</tr>
+	<tr>
+		<td>Primary?</td>
+		<td><s:checkbox name="contact.primary" /> (Check this box to make
+		this primary)</td>
+	</tr>
+</table>
+</div>

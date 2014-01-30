@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+  <package name="CONGO-editlocations" extends="CONGO-main">
+
+    <action name="coconut/addPhone" method="add" class="com.stonekeep.congo.coconut.EditRegistrantPhone">
+      <interceptor-ref name="mystack"/>
+      <result name="success">/WEB-INF/jsp/coconut/CreatePhoneForm.jsp</result>
+    </action>
+
+    <action name="coconut/createPhone" method="create" class="com.stonekeep.congo.coconut.EditRegistrantPhone">
+      <interceptor-ref name="mystack"/>
+      <result name="success" type="redirectAction">coconut/gotoUser</result>
+      <result name="exit" type="redirectAction">coconut/gotoUser</result>
+      <result name="input">/WEB-INF/jsp/coconut/CreatePhoneForm.jsp</result>
+    </action>
+
+    <action name="coconut/editPhone" method="edit"
+      class="com.stonekeep.congo.coconut.EditRegistrantPhone">
+      <interceptor-ref name="mystack"/>
+      <result name="success">/WEB-INF/jsp/coconut/EditPhoneForm.jsp</result>
+    </action>
+
+    <action name="coconut/savePhone" method="save" class="com.stonekeep.congo.coconut.EditRegistrantPhone">
+      <interceptor-ref name="mystack"/>
+      <result name="success" type="redirectAction">coconut/gotoUser</result>
+      <result name="exit" type="redirectAction">coconut/gotoUser</result>
+    </action>
+
+    <action name="coconut/addEmail" method="add" class="com.stonekeep.congo.coconut.EditRegistrantEmail">
+      <interceptor-ref name="mystack"/>
+      <result name="success">/WEB-INF/jsp/coconut/CreateEmailForm.jsp</result>
+    </action>
+
+    <action name="coconut/createEmail" method="create" class="com.stonekeep.congo.coconut.EditRegistrantEmail">
+		<interceptor-ref name="mystack"/>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+		<result name="input">/WEB-INF/jsp/coconut/CreateEmailForm.jsp</result>
+    </action>
+
+    <action name="coconut/editEmail" method="edit" class="com.stonekeep.congo.coconut.EditRegistrantEmail">
+		<interceptor-ref name="mystack"/>
+		<result name="success">/WEB-INF/jsp/coconut/EditEmailForm.jsp</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditEmailForm.jsp</result>     
+    </action>
+
+    <action name="coconut/saveEmail" method="save" class="com.stonekeep.congo.coconut.EditRegistrantEmail">
+		<interceptor-ref name="mystack"/>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+    </action>
+
+    <action name="coconut/addAddress" method="add" class="com.stonekeep.congo.coconut.EditRegistrantAddress">
+      <interceptor-ref name="mystack"/>
+      <result name="success">/WEB-INF/jsp/coconut/CreateAddressForm.jsp</result>
+    </action>
+
+    <action name="coconut/createAddress" method="create" class="com.stonekeep.congo.coconut.EditRegistrantAddress">
+		<interceptor-ref name="mystack"/>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+		<result name="input">/WEB-INF/jsp/coconut/CreateAddressForm.jsp</result>
+    </action>
+
+    <action name="coconut/editAddress" method="edit" class="com.stonekeep.congo.coconut.EditRegistrantAddress">
+		<interceptor-ref name="mystack"/>
+		<result name="success">/WEB-INF/jsp/coconut/EditAddressForm.jsp</result>
+    </action>
+
+    <action name="coconut/saveAddress" method="save" class="com.stonekeep.congo.coconut.EditRegistrantAddress">
+		<interceptor-ref name="mystack"/>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+		<result name="exit" type="redirectAction">coconut/gotoUser</result>
+		<result name="input">/WEB-INF/jsp/coconut/CreateAddressForm.jsp</result>
+    </action>
+  </package>
+</struts>

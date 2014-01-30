@@ -1,0 +1,202 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-web" extends="struts-default">
+		<interceptors>
+            <interceptor name="publicLoginChecker" class="com.stonekeep.congo.interceptors.PublicLoginChecker"/>
+            <interceptor name="publicSessionSetup" class="com.stonekeep.congo.interceptors.PublicSessionSetup"/>
+
+			<interceptor-stack name="pppweb">
+				<interceptor-ref name="publicLoginChecker" />
+				<interceptor-ref name="paramsPrepareParamsStack" />
+			</interceptor-stack>
+		</interceptors>
+    
+        <global-results>
+            <result name="notloggedin" type="redirectAction">public/Welcome</result>
+        </global-results>
+        
+        <action name="public/Welcome">	<!-- To avoid a loop, don't intercept this. -->
+            <interceptor-ref name="publicSessionSetup"/>
+        	<result>/WEB-INF/jsp/public/Welcome.jsp</result>
+        </action>
+        
+        <action name="public/">
+            <interceptor-ref name="pppweb"/>
+            <result type="redirectAction">public/Welcome</result>
+        </action>
+
+		<!--  Generic checker for unnamed stuff in public - show the jsp... --> 
+		<action name="public/*" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/{1}.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/{1}.jsp</result>
+		</action>
+		
+		<action name="public/webLoginForm" method="login" class="com.stonekeep.congo.web.WebActions">
+			<result name="success" type="redirectAction">public/MyHome</result>
+			<result name="create">/WEB-INF/jsp/public/Create.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/Welcome.jsp</result>
+			<result name="forgot">/WEB-INF/jsp/public/Forgot.jsp</result>
+		</action>
+		
+	 	<action name="public/webCreateForm" method="create" class="com.stonekeep.congo.web.WebActions">
+			<result name="success" type="redirectAction">public/MyHome</result>
+			<result name="input">/WEB-INF/jsp/public/Create.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/Welcome.jsp</result>
+		</action>
+		
+		<action name="public/webMyHomeForm" method="myhome" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success" type="redirectAction">public/MyHome</result>
+			<result name="select">/WEB-INF/jsp/public/Select.jsp</result>
+			<result name="register">/WEB-INF/jsp/public/Register.jsp</result>
+			<result name="change" type="redirectAction">public/Change</result>
+			<result name="password" type="redirectAction">public/ChangePassword</result>
+			<result name="settings">/WEB-INF/jsp/public/Settings.jsp</result>
+			<result name="invoices" type="redirectAction">public/Invoices</result>
+			<result name="addwritein">/WEB-INF/jsp/public/AddWritein.jsp</result>
+			<result name="addlinks">/WEB-INF/jsp/public/AddLinks.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="error">/WEB-INF/jsp/public/Error.jsp</result>
+			<result name="links" type="redirectAction">public/Links</result>
+			<result name="exit" type="redirectAction">public/Welcome</result>
+		</action>
+		
+		<action name="public/webRegisterSelected" method="registerSelected" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="exit" type="redirectAction">public/MyHome</result>
+			<result name="input">/WEB-INF/jsp/public/Select.jsp</result>
+			<result name="success">/WEB-INF/jsp/public/Register.jsp</result>
+			<result name="writein">/WEB-INF/jsp/public/RegisterWritein.jsp</result>
+		</action>
+		
+		<action name="public/Links" class="com.stonekeep.congo.web.Links">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/Links.jsp</result>
+		</action>
+		
+		<action name="public/webLinksForm" class="com.stonekeep.congo.web.Links" method="form">
+			<interceptor-ref name="pppweb"/>
+			<result name="input">/WEB-INF/jsp/public/Links.jsp</result>
+			<result name="success" type="redirectAction">public/Links</result>
+			<result name="done">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+			<result name="exit" type="redirectAction">public/MyHome</result>
+		</action>
+		
+		<action name="public/webLinksRemove" class="com.stonekeep.congo.web.Links" method="remove">
+			<interceptor-ref name="pppweb"/>
+			<result name="success" type="redirectAction">public/Links</result>
+		</action>
+		
+		<action name="public/webLinksRegister" method="register" class="com.stonekeep.congo.web.Links">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/Register.jsp</result>
+		</action>
+		
+		<action name="public/webLinksAccept" class="com.stonekeep.congo.web.Links" method="accept">
+			<interceptor-ref name="pppweb"/>
+			<result name="success" type="redirectAction">public/Links</result>
+		</action>
+		
+		<action name="public/Invoices" method="retrieveInvoices" class="com.stonekeep.congo.web.Invoices">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/Invoices.jsp</result>
+		</action>
+		
+		<action name="public/webSettingsForm" method="settings" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="input">/WEB-INF/jsp/public/Create.jsp</result>
+			<result name="success" type="redirectAction">public/MyHome</result>
+		</action>
+		
+		<action name="public/webChangeForm" method="change" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/Change.jsp</result>
+		</action>
+
+		<action name="public/webChangePasswordForm" method="changepassword" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/ChangePassword.jsp</result>
+		</action>
+		
+		<action name="public/webRegisterForm" method="register" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/Register.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="error">/WEB-INF/jsp/public/Error.jsp</result>
+		</action>
+
+		<action name="public/webRegisterWriteinForm" method="writeinadd" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/RegisterWritein.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="error">/WEB-INF/jsp/public/Error.jsp</result>
+		</action>
+		
+		<action name="public/webPayInvoiceForm" method="pay" class="com.stonekeep.congo.web.WebActions">
+			<interceptor-ref name="pppweb"/>
+			<result name="success" type="redirectAction">public/allDone</result>
+			<result name="input">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+			<result name="addwritein">/WEB-INF/jsp/public/AddWritein.jsp</result>
+			<result name="addlinks">/WEB-INF/jsp/public/Select.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/MyHome.jsp</result>
+		</action>
+		
+		<action name="public/webPayPalForm" method="pay" class="com.stonekeep.congo.web.Paypal">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/MyHome.jsp</result>
+			<result name="input">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+			<result name="redirect" type="redirect">${redirectURL}</result>
+			<result name="exit">/WEB-INF/jsp/public/MyHome.jsp</result>
+		</action>
+		
+		<action name="public/webPayPalConfirmSetup" method="setup" class="com.stonekeep.congo.web.Paypal">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/PayPalReviewForm.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/MyHome.jsp</result>
+		</action>
+		
+		<action name="public/webPayPalComplete" method="complete" class="com.stonekeep.congo.web.Paypal">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/PayPalComplete.jsp</result>
+			<result name="error">/WEB-INF/jsp/public/PayPalError.jsp</result>
+			<result name="exit" type="redirectAction">public/allDone</result>
+		</action> 
+		
+		<action name="public/allDone" method="alldone" class="com.stonekeep.congo.web.Paypal">
+			<interceptor-ref name="pppweb"/>
+			<result name="success">/WEB-INF/jsp/public/MyHome.jsp</result>
+		</action>
+		
+		<action name="public/webForgotForm" method="forgot" class="com.stonekeep.congo.util.GenerateMail">
+			<result name="input">/WEB-INF/jsp/public/Forgot.jsp</result>
+			<result name="success">/WEB-INF/jsp/public/ForgotSent.jsp</result>
+			<result name="exit">/WEB-INF/jsp/public/Welcome.jsp</result>
+		</action>
+		
+		<!--  Write-in management -->
+		<action name="public/writein" method="writeinprepare" class="com.stonekeep.congo.web.WebActions">
+			<result name="success">/WEB-INF/jsp/public/Welcome</result>
+		</action>
+		
+		<action name="public/webAddRegistrants" method="writeinadd" class="com.stonekeep.congo.web.WebActions">
+			<result name="success">/WEB-INF/jsp/public/PayInvoice.jsp</result>
+		</action>
+		
+		<action name="public/getStylesheet" class="com.stonekeep.congo.web.CSSFetcher"/>
+		
+		<action name="public/getConfiguredStylesheet" class="com.stonekeep.congo.web.CSSFetcher" method="getConfiguredStylesheet" />
+	
+		<action name="">
+            <interceptor-ref name="pppweb"/>
+			<result type="redirectAction">public/Welcome</result>
+		</action>
+	</package>
+</struts>
+    

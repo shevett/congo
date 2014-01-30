@@ -1,0 +1,145 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+  <package name="CONGO-main" extends="struts-default">
+	<interceptors>
+		<interceptor name="sessioncheck"
+			class="com.stonekeep.congo.interceptors.SessionChecker" />
+		<interceptor name="administratorRequired"
+			class="com.stonekeep.congo.interceptors.AdministratorChecker" />
+
+		<interceptor-stack name="mystack">
+			<interceptor-ref name="sessioncheck" />
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="dbstack">
+			<interceptor-ref name="defaultStack" />
+		</interceptor-stack>
+		<interceptor-stack name="pppstack">
+			<interceptor-ref name="sessioncheck" />
+			<interceptor-ref name="paramsPrepareParamsStack" />
+		</interceptor-stack>
+		<interceptor-stack name="admin">
+			<interceptor-ref name="sessioncheck" />
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="administratorRequired" />
+		</interceptor-stack>
+	</interceptors>
+    
+	<default-interceptor-ref name="mystack"/>
+ 
+    <global-results>
+      <result name="login" type="redirectAction">coconut/showloginpage		</result>
+      <result name="message">/WEB-INF/jsp/coconut/ShowMessageForm.jsp</result>
+    </global-results>
+
+    <!-- ShowHistory -->
+    <action name="coconut/ShowHistory" class="com.stonekeep.congo.coconut.ShowHistory">
+      <result name="success">/WEB-INF/jsp/coconut/ShowHistoryForm.jsp
+      </result>
+    </action>
+
+    <!-- EditRegistrant -->
+    <action name="coconut/EditRegistrant" class="com.stonekeep.congo.coconut.EditRegistrant">
+      <result name="success" type="redirectAction">coconut/gotoUser
+      </result>
+      <result name="input">/WEB-INF/jsp/coconut/EditRegistrantForm.jsp
+      </result>
+    </action>
+    
+    <!-- DeleteRegistrant -->
+    <action name="coconut/DeleteRegistrant" class="com.stonekeep.congo.coconut.DeleteRegistrant">
+      <result name="success">/WEB-INF/jsp/coconut/Home.jsp</result>
+      <result name="exit">/WEB-INF/jsp/coconut/ShowRegistrant.jsp</result>
+    </action>
+
+    <!-- Logout -->
+    <action name="coconut/Logout" class="com.stonekeep.congo.coconut.Logout">
+      <result name="exit" type="redirectAction">coconut/Home
+      </result>
+    </action>
+
+    <!-- createRegistrant -->
+    <action name="coconut/createRegistrant" class="com.stonekeep.congo.coconut.CreateRegistrant">
+      <result name="input">/WEB-INF/jsp/coconut/CreateRegistrantForm.jsp
+      </result>
+      <result name="success" type="redirectAction">coconut/gotoUser
+      </result>
+      <result name="exit" type="redirectAction">coconut/Home
+      </result>
+    </action>
+
+    <!-- LookupRegistrant -->
+    <action name="coconut/LookupRegistrant" class="com.stonekeep.congo.coconut.LookupRegistrant">
+      <result name="success">/WEB-INF/jsp/coconut/LookupRegistrantForm.jsp
+      </result>
+      <result name="exit" type="redirectAction">coconut/Home
+      </result>
+    </action>
+    
+    <action name="coconut/gotoMaintenance" class="com.stonekeep.congo.coconut.MaintenanceChecker">
+    	<result name="success">/WEB-INF/jsp/coconut/Maintenance.jsp</result>
+    </action>
+
+    <!--  Jumping to a specific registrant detail screen -->
+    <action name="coconut/gotoUser" class="com.stonekeep.congo.coconut.LoadUser">
+      <result name="success">/WEB-INF/jsp/coconut/ShowRegistrant.jsp</result>
+      <result name="exit" type="redirectAction">coconut/Home</result>
+    </action>
+
+    <!-- Login action  -->
+    <action name="coconut/performlogin" class="com.stonekeep.congo.coconut.Login"
+      method="execute">
+      <interceptor-ref name="dbstack"/>
+      <result name="success" type="redirectAction">coconut/Home
+      </result>
+      <result name="input" type="chain">coconut/showloginpage
+      </result>
+    </action>
+
+    <!-- Setup for login page -->
+    <action name="coconut/showloginpage" class="com.stonekeep.congo.coconut.Login"
+      method="setup">
+      <interceptor-ref name="dbstack"/>
+      <result name="success">/WEB-INF/jsp/coconut/Login.jsp
+      </result>
+    </action>
+
+    <!--  Wildcard for coconut... -->
+    <action name="coconut/*">
+      <result name="success">/WEB-INF/jsp/coconut/{1}.jsp
+      </result>
+    </action>
+
+  </package>
+
+  <include file="struts-addons.xml" />
+  <include file="struts-ajax.xml" />
+  <include file="struts-browse.xml"/>
+  <include file="struts-charts.xml" />
+  <include file="struts-editcategories.xml" />
+  <include file="struts-editdepartments.xml" />
+  <include file="struts-editdiscountcodes.xml" />
+  <include file="struts-editevents.xml"/>
+  <include file="struts-editregistranttypes.xml"/>
+  <include file="struts-editlayouts.xml"/>
+  <include file="struts-editlocs.xml"/>
+  <include file="struts-editnotes.xml"/>
+  <include file="struts-editrooms.xml"/>
+  <include file="struts-edittemplates.xml" />
+  <include file="struts-editvenues.xml" />
+  <include file="struts-properties.xml"/>
+  <include file="struts-registrantops.xml"/>
+  <include file="struts-reports.xml" />
+  <include file="struts-scheduling.xml"/>
+  <include file="struts-settings.xml" />
+  <include file="struts-tools.xml" />
+  <include file="struts-web.xml"/>
+
+  <constant name="struts.url.includeParams" value="none"/>
+  <constant name="struts.enable.SlashesInActionNames" value="true"/>
+  <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+  <constant name="struts.ui.theme" value="simple"/>
+  <constant name="struts.devMode" value="false"/>
+</struts>

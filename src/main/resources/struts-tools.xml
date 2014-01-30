@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-tools" extends="CONGO-main">
+	
+	<action name="coconut/importData" class="com.stonekeep.congo.importers.Dispatcher">
+		<interceptor-ref name="mystack" />
+		<result name="exit" type="redirectAction">coconut/Maintenance</result>
+		<result name="input">/WEB-INF/jsp/coconut/ImportDataForm.jsp</result>
+		<result name="success">/WEB-INF/jsp/coconut/ImportDataForm.jsp</result>
+	</action>
+	
+	</package>
+</struts>

@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="shevett (initialize)" id="1332416529394-1" >
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="con_detail"/>
+		</not>
+	</preConditions>
+        <createTable tableName="con_detail">
+            <column name="con_cid" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="con_name" type="VARCHAR(40)"/>
+            <column name="con_location" type="VARCHAR(50)"/>
+            <column name="con_start" type="DATETIME"/>
+            <column name="con_end" type="DATETIME"/>
+            <column name="con_comment" type="TEXT"/>
+            <column name="con_website" type="VARCHAR(80)"/>
+            <column name="con_email" type="VARCHAR(60)"/>
+            <column name="con_description" type="TEXT"/>
+            <column name="con_stylesheet" type="TEXT"/>
+            <column name="con_badgelayout" type="TEXT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-2">
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="con_regtypes"/>
+		</not>
+	</preConditions>
+        <createTable tableName="con_regtypes">
+            <column defaultValueNumeric="0" name="reg_cid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reg_name" type="VARCHAR(15)"/>
+            <column name="reg_desc" type="VARCHAR(40)"/>
+            <column name="reg_print" type="VARCHAR(40)"/>
+            <column name="reg_cost" type="DECIMAL(8,2)"/>
+            <column name="reg_expire" type="DATETIME"/>
+            <column name="reg_sequence" type="INT"/>
+            <column name="reg_active" type="BIT"/>
+            <column name="reg_discountcode" type="VARCHAR(20)"/>
+            <column name="reg_banner" type="VARCHAR(30)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-3">
+    	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_categories"/>
+		</not>
+	</preConditions>
+    <createTable tableName="config_categories">
+            <column name="cat_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="cat_cid" type="INT"/>
+            <column name="cat_name" type="VARCHAR(15)"/>
+            <column name="cat_active" type="BIT"/>
+            <column defaultValue="" name="cat_desc" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-4">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_departments"/>
+		</not>
+	</preConditions>
+    <createTable tableName="config_departments">
+            <column name="dep_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="dep_cid" type="INT"/>
+            <column name="dep_name" type="VARCHAR(15)"/>
+            <column name="dep_owner" type="INT"/>
+            <column defaultValue="" name="dep_desc" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-5">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_discountcodes"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_discountcodes">
+            <column name="dc_cid" type="INT"/>
+            <column name="dc_name" type="VARCHAR(20)"/>
+            <column name="dc_desc" type="VARCHAR(255)"/>
+            <column name="dc_note" type="VARCHAR(255)"/>
+            <column defaultValue="NULL" name="dc_type" type="enum('discount','percent','absolute')"/>
+            <column name="dc_factor" type="DECIMAL(10,2)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="dc_lastmodified" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dc_active" type="BIT"/>
+        </createTable>
+
+    </changeSet>
+
+	<changeSet author="shevett (initialize)" id="101">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<indexExists indexName="idx_discountcodes_cid_name"/>
+			</not>
+		</preConditions>
+		<createIndex tableName="config_discountcodes" indexName="idx_discountcodes_cid_name">
+			<column name="dc_cid" />
+			<column name="dc_name" />
+		</createIndex>
+	</changeSet>
+
+
+    <changeSet author="shevett (initialize)" id="1332416529394-6">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_events"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_events">
+            <column name="event_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="event_cid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_name" type="VARCHAR(20)"/>
+            <column name="event_description" type="VARCHAR(100)"/>
+            <column name="event_type" type="VARCHAR(20)"/>
+            <column name="event_category" type="VARCHAR(20)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="event_start" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0000-00-00 00:00:00" name="event_end" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_maxattendees" type="INT"/>
+            <column name="event_location" type="VARCHAR(100)"/>
+            <column name="event_detail" type="TEXT"/>
+            <column name="event_cost" type="DECIMAL(8,2)"/>
+            <column name="event_owner" type="INT"/>
+            <column defaultValue="0000-00-00 00:00:00" name="event_lastupdated" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_lasteditedby" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-7">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_properties"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_properties">
+            <column defaultValueNumeric="0" name="prop_cid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prop_name" type="VARCHAR(20)"/>
+            <column name="prop_default" type="VARCHAR(100)"/>
+            <column defaultValue="NULL" name="prop_type" type="enum('boolean','string','float','date','numeric','picker')"/>
+            <column name="prop_regprompt" type="BIT"/>
+            <column name="prop_cost" type="DECIMAL(8,2)"/>
+            <column name="prop_description" type="VARCHAR(40)"/>
+            <column name="prop_sequence" type="INT"/>
+            <column defaultValue="NULL" name="prop_scope" type="enum('Event','Global')"/>
+            <column name="prop_format" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-8">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_roomlayout"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_roomlayout">
+            <column name="layout_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="layout_name" type="VARCHAR(15)"/>
+            <column name="layout_tables" type="SMALLINT"/>
+            <column defaultValue="" name="layout_notes" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-9">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_rooms"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_rooms">
+            <column name="room_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="room_venue" type="INT"/>
+            <column name="room_name" type="VARCHAR(40)"/>
+            <column name="room_locationinvenue" type="VARCHAR(40)"/>
+            <column name="room_width" type="SMALLINT"/>
+            <column name="room_length" type="SMALLINT"/>
+            <column name="room_height" type="SMALLINT"/>
+            <column name="room_capacity" type="SMALLINT"/>
+            <column name="room_phone" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-10">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_sessions"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_sessions">
+            <column name="session_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueNumeric="0" name="session_cid" type="INT"/>
+            <column name="session_title" type="VARCHAR(100)"/>
+            <column name="session_description" type="TEXT"/>
+            <column name="session_detail" type="TEXT"/>
+            <column name="session_notes" type="VARCHAR(200)"/>
+            <column name="session_tags" type="VARCHAR(200)"/>
+            <column defaultValueNumeric="0" name="session_department" type="INT"/>
+            <column defaultValueNumeric="0" name="session_category" type="INT"/>
+            <column defaultValueNumeric="0" name="session_room" type="INT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="session_start" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0000-00-00 00:00:00" name="session_end" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="session_duration" type="INT"/>
+            <column name="session_maxattendees" type="INT"/>
+            <column name="session_cost" type="DECIMAL(8,2)"/>
+            <column name="session_owner" type="INT"/>
+            <column defaultValue="'PROPOSED'" name="session_status" type="enum('PROPOSED','VETTED','SCHEDULED','DROPPED','CANCELLED','NEEDS EDIT','ASSIGNED','DUPLICATE')"/>
+            <column defaultValueBoolean="false" name="session_public" type="BIT"/>
+            <column defaultValue="0000-00-00 00:00:00" name="session_lastupdated" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="session_lasteditedby" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-11">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_settings"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_settings">
+            <column name="setting_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="setting_name" type="VARCHAR(20)"/>
+            <column defaultValue="NULL" name="setting_type" type="enum('boolean','string','float','date','numeric','picker')"/>
+            <column name="setting_value" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-12">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="config_venues"/>
+		</not>
+	</preConditions>
+         <createTable tableName="config_venues">
+            <column name="venue_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="venue_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="venue_website" type="VARCHAR(50)"/>
+            <column defaultValue="" name="venue_location" type="VARCHAR(50)"/>
+            <column name="venue_notes" type="TEXT"/>
+            <column defaultValue="" name="venue_phone" type="VARCHAR(20)"/>
+            <column defaultValue="" name="venue_contact" type="VARCHAR(50)"/>
+            <column name="venue_rooms" type="SMALLINT"/>
+            <column defaultValueNumeric="0" name="venue_footage" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-13">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="invoice_detail"/>
+		</not>
+	</preConditions>
+         <createTable tableName="invoice_detail">
+            <column name="detail_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="detail_rid" type="INT"/>
+            <column name="detail_cid" type="INT"/>
+            <column name="detail_invoice" type="BIGINT"/>
+            <column name="detail_sequence" type="INT"/>
+            <column name="detail_operator" type="INT"/>
+            <column name="detail_type" type="VARCHAR(20)"/>
+            <column name="detail_type2" type="VARCHAR(20)"/>
+            <column name="detail_description" type="VARCHAR(100)"/>
+            <column name="detail_comment" type="TEXT"/>
+            <column name="detail_amount" type="DECIMAL(10,2)"/>
+            <column name="detail_discount" type="DECIMAL(10,2)"/>
+            <column name="detail_final" type="DECIMAL(10,2)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="detail_activity" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detail_postprocess" type="BIT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-14">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="invoices"/>
+		</not>
+	</preConditions>
+         <createTable tableName="invoices">
+            <column name="invoice_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="invoice_activity" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="invoice_creator" type="INT"/>
+            <column name="invoice_amount" type="DECIMAL(10,2)"/>
+            <column name="invoice_payer" type="INT"/>
+            <column name="invoice_paytype" type="VARCHAR(10)"/>
+            <column name="invoice_paydate" type="DATETIME"/>
+            <column name="invoice_operator" type="INT"/>
+            <column name="invoice_comment" type="TEXT"/>
+            <column name="invoice_authcode" type="VARCHAR(20)"/>
+            <column defaultValue="NULL" name="invoice_status" type="enum('READY','VOID','PAID')"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-15">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_address"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_address">
+            <column defaultValueNumeric="0" name="add_rid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="NULL" name="add_location" type="enum('Home','Work','Other')"/>
+            <column name="add_line1" type="VARCHAR(40)"/>
+            <column name="add_line2" type="VARCHAR(40)"/>
+            <column name="add_city" type="VARCHAR(40)"/>
+            <column name="add_state" type="VARCHAR(20)"/>
+            <column name="add_zipcode" type="VARCHAR(10)"/>
+            <column name="add_primary" type="BIT"/>
+            <column name="add_country" type="VARCHAR(40)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-16">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_email"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_email">
+            <column defaultValueNumeric="0" name="email_rid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="NULL" name="email_location" type="enum('Home','Work','Mobile')"/>
+            <column name="email_address" type="VARCHAR(40)"/>
+            <column name="email_primary" type="BIT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-17">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_events"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_events">
+            <column name="event_rid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_eventid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_cid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-18">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_history"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_history">
+            <column name="hist_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="hist_rid" type="INT"/>
+            <column name="hist_cid" type="INT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="hist_activity" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hist_operator" type="VARCHAR(20)"/>
+            <column name="hist_actcode" type="VARCHAR(10)"/>
+            <column name="hist_comment" type="VARCHAR(250)"/>
+            <column name="hist_arg1" type="VARCHAR(40)"/>
+            <column name="hist_arg2" type="VARCHAR(40)"/>
+            <column name="hist_tid" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-19">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_links"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_links">
+            <column name="link_id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="link_rid1" type="INT"/>
+            <column name="link_rid2" type="INT"/>
+            <column name="link_requestkey" type="VARCHAR(255)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="link_requestdate" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="0000-00-00 00:00:00" name="link_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="NULL" name="link_status" type="enum('Ok','Pending','Active')"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-20">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_master"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_master">
+            <column name="master_rid" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="master_badgename" type="VARCHAR(40)"/>
+            <column name="master_password" type="VARCHAR(41)"/>
+            <column name="master_firstname" type="VARCHAR(30)"/>
+            <column name="master_lastname" type="VARCHAR(40)"/>
+            <column name="master_company" type="VARCHAR(30)"/>
+            <column name="master_enabled" type="BIT"/>
+            <column name="master_mergedto" type="INT"/>
+            <column name="master_comment" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-21">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_notes"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_notes">
+            <column name="note_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note_rid" type="INT"/>
+            <column name="note_cid" type="INT"/>
+            <column name="note_postrid" type="INT"/>
+            <column name="note_postdate" type="TIMESTAMP"/>
+            <column name="note_ackrid" type="INT"/>
+            <column name="note_ackdate" type="TIMESTAMP"/>
+            <column name="note_type" type="enum('NORMAL','NOTICE')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note_message" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-22">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_phone"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_phone">
+            <column defaultValueNumeric="0" name="phone_rid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="NULL" name="phone_location" type="enum('Home','Work','Mobile','Fax')"/>
+            <column name="phone_phone" type="VARCHAR(40)"/>
+            <column name="phone_primary" type="BIT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-23">
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_properties"/>
+		</not>
+	</preConditions>
+     <createTable tableName="reg_properties">
+            <column defaultValueNumeric="0" name="prop_rid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prop_cid" type="INT"/>
+            <column name="prop_name" type="VARCHAR(20)"/>
+            <column name="prop_value" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-24">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="reg_state"/>
+		</not>
+	</preConditions>
+         <createTable tableName="reg_state">
+            <column name="state_rid" type="INT"/>
+            <column name="state_cid" type="INT"/>
+            <column name="state_registered" type="BIT"/>
+            <column name="state_badged" type="BIT"/>
+            <column name="state_checkedin" type="BIT"/>
+            <column name="state_regtype" type="VARCHAR(15)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="state_activity" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state_subscribed" type="BIT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-25">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<tableExists tableName="templates"/>
+		</not>
+	</preConditions>
+         <createTable tableName="templates">
+            <column name="template_cid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="template_name" type="VARCHAR(40)"/>
+            <column name="template_desc" type="VARCHAR(60)"/>
+            <column name="template_body" type="TEXT"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="template_lastmod" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-26">
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="con_regtypes_ibfk_1"/>
+		</not>
+	</preConditions>
+	<addForeignKeyConstraint baseColumnNames="reg_cid" baseTableName="con_regtypes" constraintName="con_regtypes_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-27">
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_regtype_discountcode"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="reg_cid, reg_discountcode" baseTableName="con_regtypes" constraintName="fk_regtype_discountcode" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="dc_cid, dc_name" referencedTableName="config_discountcodes" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-28">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_categories_ibfk_1"/>
+		</not>
+	</preConditions>
+	<addForeignKeyConstraint baseColumnNames="cat_cid" baseTableName="config_categories" constraintName="config_categories_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-29">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_departments_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="dep_cid" baseTableName="config_departments" constraintName="config_departments_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-30">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_properties_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="prop_cid" baseTableName="config_properties" constraintName="config_properties_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-31">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_rooms_ibfk_2"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="room_venue" baseTableName="config_rooms" constraintName="config_rooms_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="venue_id" referencedTableName="config_venues" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-32">
+	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_sessions_ibfk_1"/>
+		</not>
+	</preConditions>
+    <addForeignKeyConstraint baseColumnNames="session_cid" baseTableName="config_sessions" constraintName="config_sessions_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-33">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_sessions_ibfk_3"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="session_lasteditedby" baseTableName="config_sessions" constraintName="config_sessions_ibfk_3" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-34">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="config_sessions_ibfk_2"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="session_owner" baseTableName="config_sessions" constraintName="config_sessions_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-35">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_detail_cid"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="detail_cid" baseTableName="invoice_detail" constraintName="fk_detail_cid" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-36">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_detail_invoice_invoice"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="detail_invoice" baseTableName="invoice_detail" constraintName="fk_detail_invoice_invoice" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="invoice_id" referencedTableName="invoices" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-37">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_detail_rid"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="detail_rid" baseTableName="invoice_detail" constraintName="fk_detail_rid" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-38">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_invoices_creator"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="invoice_creator" baseTableName="invoices" constraintName="fk_invoices_creator" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-39">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_invoices_operator"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="invoice_operator" baseTableName="invoices" constraintName="fk_invoices_operator" deferrable="false" initiallyDeferred="false" onDelete="SET NULL" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-40">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_address_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="add_rid" baseTableName="reg_address" constraintName="reg_address_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-41">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_email_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="email_rid" baseTableName="reg_email" constraintName="reg_email_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-42">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_events_ibfk_3"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="event_cid" baseTableName="reg_events" constraintName="reg_events_ibfk_3" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-43">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_events_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="event_rid" baseTableName="reg_events" constraintName="reg_events_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-44">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_history_ibfk_2"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="hist_cid" baseTableName="reg_history" constraintName="reg_history_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-45">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_history_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="hist_rid" baseTableName="reg_history" constraintName="reg_history_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-46">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_reglink_rid1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="link_rid1" baseTableName="reg_links" constraintName="fk_reglink_rid1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-47">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_reglink_rid2"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="link_rid2" baseTableName="reg_links" constraintName="fk_reglink_rid2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-48">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_notes_ibfk_4"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="note_ackrid" baseTableName="reg_notes" constraintName="reg_notes_ibfk_4" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-49">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_notes_ibfk_2"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="note_cid" baseTableName="reg_notes" constraintName="reg_notes_ibfk_2" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-50">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_notes_ibfk_3"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="note_postrid" baseTableName="reg_notes" constraintName="reg_notes_ibfk_3" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-51">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_notes_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="note_rid" baseTableName="reg_notes" constraintName="reg_notes_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-52">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_phone_ibfk_1"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="phone_rid" baseTableName="reg_phone" constraintName="reg_phone_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-53">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="0_64"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="prop_cid" baseTableName="reg_properties" constraintName="0_64" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+    <changeSet author="shevett (initialize)" id="1332416529394-54">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="0_62"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="prop_rid" baseTableName="reg_properties" constraintName="0_62" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-55">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_state_ibfk_4"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="state_cid" baseTableName="reg_state" constraintName="reg_state_ibfk_4" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-56">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="reg_state_ibfk_3"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="state_rid" baseTableName="reg_state" constraintName="reg_state_ibfk_3" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="master_rid" referencedTableName="reg_master" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-57">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<foreignKeyConstraintExists foreignKeyName="fk_template_cid"/>
+		</not>
+	</preConditions>
+        <addForeignKeyConstraint baseColumnNames="template_cid" baseTableName="templates" constraintName="fk_template_cid" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="con_cid" referencedTableName="con_detail" referencesUniqueColumn="false"/>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-58">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="cid"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="cid" tableName="con_detail" unique="false">
+            <column name="con_cid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-59">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="idx_regtypes_cid_name"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="idx_regtypes_cid_name" tableName="con_regtypes" unique="true">
+            <column name="reg_cid"/>
+            <column name="reg_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-60">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="cat_name"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="cat_name" tableName="config_categories" unique="false">
+            <column name="cat_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-61">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="dep_name"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="dep_name" tableName="config_departments" unique="false">
+            <column name="dep_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-63">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="config_categories_ibfk_1"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="name" tableName="config_properties" unique="false">
+            <column name="prop_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-64">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="layout_name"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="layout_name" tableName="config_roomlayout" unique="false">
+            <column name="layout_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-65">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="idx_invoices_invoice_payer"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="idx_invoices_invoice_payer" tableName="invoices" unique="false">
+            <column name="invoice_payer"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-66">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="reg_address_rid_location"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="reg_address_rid_location" tableName="reg_address" unique="true">
+            <column name="add_rid"/>
+            <column name="add_location"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-67">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="reg_email_rid_location"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="reg_email_rid_location" tableName="reg_email" unique="true">
+            <column name="email_rid"/>
+            <column name="email_location"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-68">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="idx_reg_history_activity"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="idx_reg_history_activity" tableName="reg_history" unique="false">
+            <column name="hist_activity"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-69">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="idx_reg_friends_rid_friendrid"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="idx_reg_friends_rid_friendrid" tableName="reg_links" unique="false">
+            <column name="link_rid1"/>
+            <column name="link_rid2"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-70">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="id"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="id" tableName="reg_master" unique="false">
+            <column name="master_rid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-71">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="note_id"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="note_id" tableName="reg_notes" unique="false">
+            <column name="note_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-72">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="reg_phone_rid_location"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="reg_phone_rid_location" tableName="reg_phone" unique="true">
+            <column name="phone_rid"/>
+            <column name="phone_location"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-73">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="dt"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="dt" tableName="reg_state" unique="false">
+            <column name="state_activity"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-74">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="ridcid"/>
+		</not>
+	</preConditions>
+        <createIndex indexName="ridcid" tableName="reg_state" unique="true">
+            <column name="state_rid"/>
+            <column name="state_cid"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett (initialize)" id="1332416529394-75">
+       	<preConditions onFail="MARK_RAN">
+		<not>
+			<indexExists indexName="name"/>
+		</not>
+		</preConditions>
+        <createIndex indexName="name" tableName="templates" unique="false">
+            <column name="template_name"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="shevett" id="fix-initialization-defaults">
+    	<preConditions onFail="MARK_RAN">
+    		<or>
+				<sqlCheck expectedResult="0">
+					select count(*) from information_schema.columns 
+					where (table_name='con_detail' and table_schema=database() and extra='auto_increment')
+				</sqlCheck>
+				<sqlCheck expectedResult="0">
+					select count(*) from information_schema.columns 
+					where (table_name='config_categories' and table_schema=database() and extra='auto_increment')
+				</sqlCheck>
+			</or>
+    	</preConditions>
+    	
+    	<addAutoIncrement tableName="con_detail" columnName="con_cid" columnDataType="int"/>
+    	<addAutoIncrement tableName="reg_master" columnName="master_rid" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_departments" columnName="dep_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_events" columnName="event_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_categories" columnName="cat_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_roomlayout" columnName="layout_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_rooms" columnName="room_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_sessions" columnName="session_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="config_venues" columnName="venue_id" columnDataType="int"/>
+
+		<dropForeignKeyConstraint constraintName="fk_detail_invoice_invoice" baseTableName="invoice_detail"/>
+		<modifyDataType tableName="invoice_detail" columnName="detail_invoice" newDataType="int(11)"/>
+		<addAutoIncrement tableName="invoice_detail" columnName="detail_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="invoices" columnName="invoice_id" columnDataType="int"/>
+		<addForeignKeyConstraint baseColumnNames="detail_invoice" baseTableName="invoice_detail" constraintName="fk_detail_invoice_invoice" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="invoice_id" referencedTableName="invoices" referencesUniqueColumn="false"/>
+
+    	<addAutoIncrement tableName="reg_notes" columnName="note_id" columnDataType="int"/>
+    	<addAutoIncrement tableName="reg_links" columnName="link_id" columnDataType="int"/>
+    </changeSet>
+    
+    <changeSet author="shevett" id="fix-initialization-defaults1">
+    	<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from information_schema.columns where table_name='config_settings' and table_schema=database() and extra='auto_increment';
+			</sqlCheck>
+    	</preConditions>
+    	<addAutoIncrement tableName="config_settings" columnName="setting_id" columnDataType="int"/>
+    </changeSet>
+    
+	<changeSet author="shevett" id="fix-initialization-defaults2">
+    	<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				select count(*) from information_schema.columns where table_name='reg_history' and table_schema=database() and extra='auto_increment';
+			</sqlCheck>
+    	</preConditions>
+    	<addAutoIncrement tableName="reg_history" columnName="hist_id" columnDataType="int"/>
+    </changeSet>
+    
+	<changeSet author="shevett" id="add-concap-column">
+       	<preConditions onFail="MARK_RAN">
+			<not>
+				<columnExists tableName="con_detail" columnName="con_cap"/>
+			</not>
+		</preConditions>
+		<addColumn tableName="con_detail">
+	            <column name="con_cap" type="INT"/>
+		</addColumn>
+    </changeSet>
+
+	<changeSet author="shevett" id="add-regtype-daymap">
+       	<preConditions onFail="MARK_RAN">
+			<not>
+				<columnExists tableName="con_regtypes" columnName="reg_daymap"/>
+			</not>
+		</preConditions>
+		<addColumn tableName="con_regtypes">
+			<column defaultValueNumeric="0" name="reg_daymap" type="TINYINT"/>
+		</addColumn>
+		<addColumn tableName="con_regtypes">
+			<column defaultValueBoolean="false" name="reg_comp" type="boolean"/>
+		</addColumn>
+    </changeSet>    	
+    
+    
+</databaseChangeLog>

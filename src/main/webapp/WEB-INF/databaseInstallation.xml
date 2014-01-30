@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+  <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+  
+    <property name="dataSource" ref="com.stonekeep.congo.database.Pool"/>
+    <property name="changeLog"
+      value="classpath:/com/stonekeep/congo/structs/install.changelog.xml"/>
+  </bean>
+
+  <!--
+    Database upgrade flag is actually dependent on configuration being
+    ready. The bean below abuses factory methods to check something like
+    the expression "isConfigured && database.autoUpgrade".
+  -->
+<!--   <bean id="com.stonekeep.congo.database.AutoUpgrade" class="com.stonekeep.congo.spring.BooleanOps"
+    factory-method="and">
+    <constructor-arg>
+      <list>
+        <bean class="java.lang.Boolean" factory-method="valueOf">
+          <constructor-arg value="${database.autoupgrade}"/>
+        </bean>
+
+        <ref bean="com.stonekeep.congo.config.IsConfigured"/>
+      </list>
+    </constructor-arg>
+  </bean> -->
+</beans>

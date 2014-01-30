@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-reports" extends="CONGO-main">
+	
+    <!-- ReportStatus -->
+    <action name="coconut/ReportStatus" class="com.stonekeep.congo.reports.RegistrantStatusReport">
+		<interceptor-ref name="mystack"/>
+		<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp</result>
+    </action>
+    
+    <action name="coconut/ReportAfterEventExport" class="com.stonekeep.congo.reports.AfterEventExport">
+		<interceptor-ref name="mystack"/>
+		<result name="exit">/WEB-INF/jsp/coconut/ReportsMenu.jsp</result>
+		<result name="input">/WEB-INF/jsp/coconut/ReportSetupAfterEventExport</result>
+		<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp</result>
+    </action>
+    
+    <action name="coconut/ReportActivity" class="com.stonekeep.congo.reports.ActivityReport">
+    	<interceptor-ref name="mystack"/>
+    	<result name="exit" type="redirect">coconut/ReportsMenu</result>
+    	<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp</result>
+    </action>
+    
+    <!--  ReportProperties -->
+
+    <action name="coconut/setupReportProperties" method="setup" class="com.stonekeep.congo.reports.Properties">
+		<interceptor-ref name="mystack"/>
+		<result name="success">/WEB-INF/jsp/coconut/ReportSetupProperties.jsp</result>
+    </action>
+    
+    <action name="coconut/runReportProperties" class="com.stonekeep.congo.reports.Properties">
+		<interceptor-ref name="mystack"/>
+		<result name="exit">/WEB-INF/jsp/coconut/ReportsMenu.jsp</result>
+		<result name="input">/WEB-INF/jsp/coconut/setupReportProperties</result>
+		<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp</result>
+    </action>
+    
+    <!--  ReportNotices -->
+
+    <action name="coconut/setupReportNotices" method="setup" class="com.stonekeep.congo.reports.Notices">
+		<interceptor-ref name="mystack"/>
+		<result name="success">/WEB-INF/jsp/coconut/ReportSetupNotices.jsp</result>
+    </action>
+    
+    <action name="coconut/ReportNotices" class="com.stonekeep.congo.reports.Notices">
+		<interceptor-ref name="mystack"/>
+		<result name="exit">/WEB-INF/jsp/coconut/ReportsMenu.jsp</result>
+		<result name="input">/WEB-INF/jsp/coconut/setupReportNotices</result>
+		<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp</result>
+    </action>
+
+    <action name="coconut/ReportByDate" class="com.stonekeep.congo.reports.ByDate">
+    	<interceptor-ref name="mystack"/>
+    	<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp
+    	</result>
+    </action>
+    
+    <action name="coconut/ReportSalesbyType" class="com.stonekeep.congo.reports.SalesbyType">
+    	<interceptor-ref name="mystack"/>
+    	<result name="success">/WEB-INF/jsp/coconut/ShowReportForm.jsp
+    	</result>
+    </action>
+    
+	</package>
+</struts>

@@ -1,0 +1,212 @@
+@CHARSET "ISO-8859-1";
+/*
+	#---------------------------------------------------
+	$Id: coconut.css 3749 2008-04-16 02:25:29Z dbs $
+	$Source$
+	#---------------------------------------------------
+*/
+
+body {
+	background-color: #cccc99;
+	font-family: sans-serif ;
+	color: white;
+}
+
+a:link, a:visited, a:active {color:blue} 
+a:hover {
+	color:black;
+	background-color: #20ff20;
+}
+
+th {
+	background-color: #993333;
+	font-variant: normal;
+	font-size: xx-small;
+	font-family: sans-serif;
+	color: #cccccc;
+	margin-right: auto;
+	text-align: left;
+}
+
+b {
+	text-align: left ;
+	font-style: normal;
+	font-size: medium;
+	color: black;
+	margin-right: auto;
+}
+
+strong {
+	text-align: center ;
+	font-style: normal;
+	font-size: medium;
+	color: #dd9999;
+}
+
+table.data {
+	color: black;
+	font-size: small;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px ;
+	border-color:	#000000;
+}
+
+table.picktable {
+	color: black;
+	font-size: small;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px ;
+	border-color:	#000000;
+	background-color: #bbbbbb;
+}
+
+th.picktable {
+	background-color: #333399;
+	font-variant: normal;
+	color: #cccccc;
+	margin-right: auto;
+}
+
+td.picktable {
+	background-color: #bbbbbb;
+	color: #ffffff;
+	padding-left: 10px;
+	padding-right: 5px;
+} 
+
+td, table, tr {
+	color: black;
+	font-size: small;
+}
+
+tr.sidebar,td.sidebar {
+	font-size: x-small;
+}
+
+td.notice {
+	color: #d0d0d0;
+}
+
+td.acked { 
+	color: #000000;
+}
+
+tr.greybar {
+	color: black;
+	font-size: small;
+	background-color: #f0f0f0;
+}
+
+tr.notice {
+	background-color: #CC0033;
+}
+
+tr.acked { 
+	background-color: #00AA25;
+}
+
+div.pageHeader { 
+	float: left; 
+	/* margin-top: 0px 100px 0px 0px;  */
+	width: 100px; 
+	background-color: white;
+	height: 75px; 
+}
+
+div.cocobanner {
+	margin: 0px 400px 0px 100px ;
+	width: 240px;
+	height: 75px;
+}
+
+div.sidecontainer {
+	float:left ;
+	width: 100px;
+	height: 300px;
+}
+
+div.sidebox {
+	font-size: x-small;
+	background-color: #ffffff;
+	color: black;
+}
+
+div.bodybox {
+	margin-left: 120px;
+}
+
+div.powered {
+	font-size: x-small;
+	text-align: center; 
+	margin-top: 20px;
+}
+
+.menuboxes,
+.buttonbox {
+	font-size: small;
+	background-color: #ffffcc;
+	color: #000000;
+	border-width: 2px;
+	margin-bottom: 10px;
+	margin-left: 0px;
+	margin-right: auto;
+}
+
+.menuboxes {
+	padding: 2px;
+}
+
+.buttonbox {
+	padding: 0px;
+}
+
+div.widebox {
+	width: 1000px;
+}
+
+div.topbox { 
+	border: 1px;
+	border-style: solid;
+	border-color: #888888;
+}
+
+button.normal {
+	width: 90px; 
+	height: 25px;
+	font-size: x-small;
+}
+
+button.checkbox {
+	width: 25px;
+	height: 25px;
+}
+
+.loginbox { 
+	font-size: small;
+	background-color: #ffffcc;
+	color: #000000;
+	border-width: 2px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:25px;
+	padding-bottom:20px;
+	width: 500px;
+	padding: 0px;
+} 
+
+div.menuheader { 
+	font-size: medium;
+	background-color: #35359f;
+	color: #ffffff;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: auto;
+	padding: 2px;
+}
+
+div.message {
+	background-color: #3a3a3a;
+	color: #ffefef;
+	margin: 0px;
+	padding: 0px;
+}

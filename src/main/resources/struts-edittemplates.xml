@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-edittemplates" extends="CONGO-main">
+	
+	<default-interceptor-ref name="admin"/>
+	
+	<action name="coconut/listTemplates" class="com.stonekeep.congo.coconut.EditTemplate">
+		<result name="success">/WEB-INF/jsp/coconut/TemplateSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editTemplate" method="view" class="com.stonekeep.congo.coconut.EditTemplate">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditTemplateForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateEditTemplate" method="update" class="com.stonekeep.congo.coconut.EditTemplate">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listTemplates</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditTemplateForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteTemplatePrompt" method="deletePrompt" class="com.stonekeep.congo.coconut.EditTemplate">
+		<interceptor-ref name="pppstack"/>
+		<result name="success">/WEB-INF/jsp/coconut/TemplateDeletePrompt.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteTemplate" method="delete" class="com.stonekeep.congo.coconut.EditTemplate">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listTemplates</result>
+	</action>
+	
+	</package>
+</struts>

@@ -1,0 +1,35 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+  <package name="struts-configure"  extends="struts-default">
+    <interceptors>
+      <interceptor name="sessionCheckIfConfigured"
+        class="com.stonekeep.congo.config.ConfiguredSessionChecker"/>
+
+      <interceptor-stack name="checkLoginWhenConfigured">
+        <interceptor-ref name="sessionCheckIfConfigured"/>
+        <interceptor-ref name="defaultStack"/>
+      </interceptor-stack>
+    </interceptors>
+
+    <global-results>
+      <result name="login" type="redirectAction">coconut/showloginpage
+      </result>
+    </global-results>
+
+    <action name="coconut/configure" class="com.stonekeep.congo.config.ConfigSchema">
+      <interceptor-ref name="checkLoginWhenConfigured"/>
+      <result>/WEB-INF/jsp/coconut/ConfigureProperties.jsp
+      </result>
+    </action>
+
+    <action name="coconut/saveProperties" class="com.stonekeep.congo.coconut.SaveProperties">
+      <interceptor-ref name="checkLoginWhenConfigured"/>
+      <result name="success" type="redirectAction">coconut/showloginpage</result>
+      <result name="input" type="chain">coconut/configure</result>
+      <result name="exit" type="redirectAction">coconut/Maintenance</result>
+    </action>
+    
+  </package>
+</struts>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>
+
+	<appender name="congolog" class="org.apache.log4j.FileAppender">
+		<param name="Append" value="true" />
+		<param name="File" value="/tmp/congo.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %5p [%c{1}] %m%n"/>
+		</layout>
+	</appender>
+	
+	<!--
+		When setting global loggers, use this entry to change system-wide logging.  Normal run levels
+		should be 'INFO'.  Normal debugging should be 'DEBUG'.  
+	 -->
+
+	<category name="com.stonekeep.congo">
+		<priority value="INFO"/>
+	</category>
+	
+	<category name="org.apache2.struts2">
+		<priority value="WARN"/>
+	</category>
+	
+	<category name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+		<priority value="ERROR"/>
+	</category>
+	
+	<category name="com.stonekeep.congo.reports.AfterEventExport">
+		<priority value="INFO"/>
+	</category>
+			
+	<category name="com.stonekeep.congo.coconut.PrintBadge">
+		<priority value="INFO"/>
+	</category>
+
+	<category name="com.stonekeep.congo.util.SystemBadge">
+		<priority value="INFO"/>
+	</category>
+
+	<!--  this primarily controls container and environmental logging... -->
+    <root>
+        <priority value="INFO" />
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="congolog"/>
+    </root>
+	
+</log4j:configuration>

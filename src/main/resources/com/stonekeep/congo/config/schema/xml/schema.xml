@@ -1,0 +1,140 @@
+<schema xmlns="http://congo.stonekeep.com/configuration-schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://congo.stonekeep.com/configuration-schema configuration-schema.xsd">
+  <description>
+  	Configuration Settings for CONGO.  Use this form to provide CONGO with
+  	database connectivity information and other runtime settings.  
+  </description>
+
+  <category name="Database">
+    <description/>
+
+    <entry key="database.type" name="Database Type" type="select"
+      default="mysql">
+      <description>The type of database in use.</description>
+      <values>
+        <value label="MySQL">mysql</value>
+      </values>
+    </entry>
+
+    <entry key="database.host" name="Database Server" type="text"
+      default="localhost">
+      <description>
+      	The hostname where the database is located
+      </description>
+     </entry>
+
+    <entry key="database.name" name="Database Name" type="text"
+      default="congo">
+      <description>
+      	The database instance name.  This instance MUST already exist.
+      </description>
+     </entry>
+
+    <entry key="database.user" name="Database Username" type="text"
+      default="congo">
+      <description>
+		The user to use when connecting to the database.  Permissions for this user
+		(and password) must have been set up ahead of time by the database administrator.
+      </description>
+    </entry>
+
+    <entry key="database.password" name="Database Password" type="password"
+      optional="true">
+      <description>
+      	Password for authentication to the database instance specified above.
+      </description>
+    </entry>
+
+    <entry key="database.autoupgrade" name="Automatic Schema Upgrades"
+      type="select" default="true">
+      <description>
+        Enable schema upgrades to have CONGO automatically create and
+        maintain the database schema. For this feature to work, the user
+        identified above must have the ability to create and modify tables
+        and procedures in the database. 
+      </description>
+
+      <values>
+        <value label="Disabled">false</value>
+        <value label="Enabled">true</value>
+      </values>
+    </entry>
+  </category>
+  
+  <category name="Authorize.net">
+  	<entry key="authorizenetenabled" name="Enable Authorize.Net payments" type="select" default="false">
+  		<description>
+	  		Allow people to a configured Authorize.Net service to pay for items / registrations
+	  	</description>
+  	    <values>
+        	<value label="Disabled">false</value>
+        	<value label="Enabled">true</value>
+      	</values>
+  	</entry>
+  </category>
+  
+  <category name="SMTP">
+  	<entry key="smtpserver" name="SMTP Server name" type="text" default="localhost">
+  		<description>
+  			The hostname of your outbound SMTP server
+  		</description>
+  	</entry>
+  	<entry key="smtpport" name="SMTP Server port" type="text" default="25">
+  		<description>
+  			What port number should be used when sending outbound mail to the SMTP server
+  		</description>
+  	</entry>
+  	<entry key="smtpfromaddress" name="From address" type="text" default="congo@localhost">
+  		<description>
+  			The 'from' address for outbound mail
+  		</description>
+  	</entry>
+  	<entry key="smtpfromname" name="From name" type="text" default="CONGO Event Management System">
+  		<description>
+  			The full text name to be used in outbound mail
+  		</description>
+  	</entry>
+  	<entry key="smtpbcc" name="BCC Target" type="text">
+  		<description>
+  			All outbound mail can be BCC'ed to a certain address (useful for notification)
+  		</description>
+  	</entry>
+  </category>
+  
+  <category name="badge">
+  	<entry key="tmpdir" name="Temporary work directory" type="text" default="/tmp/">
+  		<description>
+  			The directory to store temporary files during badge creation.
+  		</description>
+  	</entry>
+  	<entry key="imagedir" name="Image directory" type="text" default="/tmp/images/">
+  		<description>
+  			The directory to use to find background images for badges
+  		</description>
+  	</entry>
+  	<entry key="badgeIdentifier" name="Badge Identifier" type="text" default="default">
+  		<description>
+  			What badge layout definition to use when printing.
+  		</description>
+  	</entry>
+  	<entry key="printcommand" name="Badge print command" type="text" default="lpr">
+  		<description>
+  			Command to use to submit the PDF file for printing
+  		</description>
+  	</entry>
+  </category>
+  
+  <category name="licensing">
+  	<entry key="keyname" name="Licensee name" type="text" default="unregistered">
+  		<description>
+  			The name of the organization this copy of CONGO is licensed to
+  		</description>
+  	</entry>
+  	<entry key="keytext" name="License Key" type="text" default="">
+  		<description>
+  			A valid license key for this installation. You can get a license key from http://www.stonekeep.com/.
+  		</description>
+  	</entry>
+  </category>
+</schema>

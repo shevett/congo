@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-editnotes" extends="CONGO-main">
+
+	<action name="coconut/addNote" method="addNote" class="com.stonekeep.congo.coconut.EditNotes">
+		<interceptor-ref name="mystack" />
+		<result name="exit">/WEB-INF/jsp/coconut/ShowRegistrant.jsp</result>
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/ackNote" method="ackNote" class="com.stonekeep.congo.coconut.EditNotes">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/gotoUser</result>
+	</action>
+	
+	<action name="coconut/showNotes" method="showNotes" class="com.stonekeep.congo.coconut.EditNotes">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/AddNoteForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteNote" method="deleteNote" class="com.stonekeep.congo.coconut.EditNotes">
+		<interceptor-ref name="mystack" />
+		<result name="success" type="redirectAction">coconut/showNotes</result>
+	</action>
+	
+	</package>
+</struts>

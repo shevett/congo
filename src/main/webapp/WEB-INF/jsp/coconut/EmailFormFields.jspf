@@ -1,0 +1,23 @@
+<%@ taglib prefix="s" uri="/struts-tags"%>
+
+<s:hidden name="contact.rid" />
+<div class="menuboxes">
+<table>
+	<tr>
+		<td>Location</td>
+		<td><s:select name="contact.location" headerKey="-1"
+			headerValue="Select Location"
+			list="#{'Home':'Home', 'Work':'Work', 'Mobile':'Mobile'}"
+			required="true" /></td>
+	</tr>
+	<tr>
+		<td>Email address</td>
+		<td><s:textfield name="contact.address" size="40" maxlength="40"/></td>
+	</tr>
+	<tr>
+		<td>Primary?</td>
+		<td><s:checkbox name="contact.primary" /> (Check this box to make
+		this primary)</td>
+	</tr>
+</table>
+</div>

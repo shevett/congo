@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-EditVenues" extends="CONGO-main">
+
+	<action name="coconut/listVenues" class="com.stonekeep.congo.coconut.EditVenue">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/VenueSelector.jsp</result>
+	</action>
+	
+	<action name="coconut/editVenue" method="view" class="com.stonekeep.congo.coconut.EditVenue">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditVenueForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateVenue" method="update" class="com.stonekeep.congo.coconut.EditVenue">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/listVenues</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditVenuesForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteVenue" method="delete" class="com.stonekeep.congo.coconut.EditVenue">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listVenues</result>
+		<result name="input">/WEB-INF/jsp/coconut/Venueselector.jsp</result>
+	</action>
+	
+	<action name="coconut/createVenue" method="create" class="com.stonekeep.congo.coconut.EditVenue">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/listVenues</result>
+	</action>
+
+	</package>
+</struts>

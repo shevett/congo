@@ -1,0 +1,635 @@
+@charset "utf-8";
+/* 	Super Simple Admin Theme By Jeff Adams		*/
+
+
+/* We first import a reset file to reset browser default styling */
+@import url("../css/reset.css");
+@import url("../css/navigation.css"); /*This handles all the navigation items */
+
+/* ----------------------------
+		BASIC STYLES
+------------------------------- */
+
+						/*Change your font here */
+body 					{
+	background-color: #EAEAEA;
+	font-family: Arial, Helvetica, sans-serif;
+}
+h1,h2,h3,h4,h5,h6		{ color: #333333;}
+
+p 		{ font-size: 12px;padding: 0px;line-height: 24px;margin-top: 0px;margin-right: 0px;margin-bottom: 12px;margin-left: 0px;color: #666666;}
+
+ol 		{ list-style-type: lower-roman;}
+dt 		{ font-weight: bold;text-decoration: underline;font-size: 14px;margin-top: 5px;margin-bottom: 5px;} 
+dd 		{
+	font-size: 12px;
+	color: #666666;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 10px;
+}
+#admin_wrapper {
+	width: 450px;
+	margin-top: 50px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+	background-color: #FFFFFF;
+	border: 10px solid #d6d6d6;
+	padding-top: 15px;
+	padding-right: 30px;
+	padding-bottom: 15px;
+	padding-left: 30px;
+}
+	#admin_wrapper h1 	{ font-size: 28px;padding-bottom: 10px;}
+
+
+
+
+/* ----------------------------
+		NOTIFICATIONS
+------------------------------- */
+.success, .fail, .information, .attention {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	padding-top: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 60px;
+	font-size: 12px;
+	height: 30px;
+	font-weight: bold;
+	line-height: 30px;
+}
+
+.success 				{ background-color: #D5FFCF; border: 1px solid #97FF88; color: #009900; background-image: url(../img/accept.png);}
+.fail 					{ background-color: #FFCFCF;border: 1px solid #FF9595;color: #CC3300; background-image: url(../img/delete.png);}
+.information 			{ background-color: #DCE3FF;border: 1px solid #93A8FF;color: #0033FF; background-image: url(../img/information.png);}
+.attention 				{ background-color: #FFFBCC;border: 1px solid #FFF35E;color: #C69E00; background-image: url(../img/warning.png);}
+
+.close-notification					{
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	background: url(../img/close.png) no-repeat;
+	top: 5px;
+	right: 5px;
+	cursor: pointer;
+}
+
+.even					{
+	background-color: #EAEAEA;
+}
+
+/* ----------------------------
+		LAYOUT
+------------------------------- */
+
+#top			{ height: 20px;background-color: #0A0F13;}
+#header			{ height: 70px;background-color: #131C25;padding-left: 50px;}
+	
+	#header h1 {
+		color: #FFFFFF;
+		margin: 0px;
+		padding-top: 10px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		padding-left: 0px;
+		font-size: 200%;
+	}
+
+#content_wrapper {
+	margin-top: 20px;
+	margin-left: 50px;
+	padding: 0px;
+	float: left;
+	margin-right: auto;
+	margin-bottom: 20px;
+	clear: both;
+	width: 90%;
+	
+
+	
+}
+#primary_content {
+	width: 70%;
+	float: left;
+	margin: 0px;
+	padding-top: 20px;
+	padding-right: 30px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	background-color: #FFFFFF;
+	border: 1px solid #d6d6d6;
+}
+
+#primary_content_wide {
+	width: 100%;
+	float: left;
+	margin: 0px;
+	padding-top: 20px;
+	padding-right: 30px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	background-color: #FFFFFF;
+	border: 1px solid #d6d6d6;
+}
+
+#floating_content {
+	width: 70%;
+	float: left;
+	margin: 0px;
+	padding-top: 5px;
+	padding-right: 30px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	background-color: #FFFFFF;
+	border: 1px solid #d6d6d6;
+}
+
+/* ----------------------------
+		PRIMARY CONTENT
+------------------------------- */
+
+
+
+#primary_content h1, #modal h1 	{ font-size: 28px;padding-bottom: 10px;}
+
+#primary_content h2, #modal h2 {
+	font-size: 22px;
+	margin-top: 5px;
+	margin-right: 0px;
+	margin-bottom: 20px;
+	margin-left: 0px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #d6d6d6;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 10px;
+	padding-left: 0px;
+}
+
+#primary_content h3, #modal h3 	{
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #222;
+	margin-top: 10px;
+}
+#primary_content h4 , #modal h4	{
+	font-size: 15px;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	color: #333333;
+	margin-top: 5px;
+	padding: 0px;
+}
+#primary_content h5, #modal h5 	{
+	font-size: 15px;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+	color: #999999;
+	padding: 0px;
+}
+#primary_content h6 	{
+	font-size: 14px;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+	color: #999999;
+}
+#primary_content ol 	{ padding-left: 20px;list-style-type: decimal;font-size: 13px;margin: 7px;}
+
+#primary_content ul {
+	list-style-type: disc;
+	padding-left: 20px;
+	font-size: 13px;
+	margin-top: 7px;
+	margin-right: 7px;
+	margin-bottom: 12px;
+	margin-left: 7px;
+}
+
+#primary_content li 	{
+	color: #666666;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+#sidebar {
+	float: left;
+	width: 20%;
+	padding-top: 0px;
+	margin-top: 0px;
+	line-height: 20px;
+}
+#sidebar img {
+	float: left;
+	padding-right: 10px;
+}
+
+
+
+/* ----------------------------
+		SIDEBAR
+------------------------------- */
+
+	#sidebar h3 {
+		padding-left: 10px;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 10px;
+		margin-left: 0px;
+		padding-top: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		font-size: 20px;
+	}
+	
+	#sidebar li 	{ margin: 0px;padding: 0px;}
+	
+	#sidebar a {
+		color: #666666;
+		text-decoration: none;
+		font-size: 12px;
+		padding: 2px;
+		display: block;
+		height:100%;
+		border-top-width: 1px;
+		border-bottom-width: 1px;
+		border-top-style: solid;
+		border-bottom-style: solid;
+		border-top-color: #EEEEEE;
+		border-bottom-color: #EEEEEE;
+		margin-top: 0px;
+		margin-right: 0px;
+		margin-bottom: 5px;
+		margin-left: 0px;
+	}
+
+
+	#sidebar .active, #sidebar a:hover {
+		background-color: #FFFFFF;
+		margin-left: -2px;
+		padding-left: 2px;
+		border-right-width: 1px;
+		border-right-style: solid;
+		border-right-color: #d6d6d6;
+		border-top-width: 1px;
+		border-bottom-width: 1px;
+		border-top-style: solid;
+		border-bottom-style: solid;
+		border-top-color: #d6d6d6;
+		border-bottom-color: #d6d6d6;
+		color: #000000;
+	}
+
+/* ----------------------------
+		FOOTER
+------------------------------- */
+#footer	{
+	clear: both;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 10px;
+	padding-left: 20px;
+}
+
+/* ----------------------------
+		TABLES
+------------------------------- */
+
+table {
+	font: 11px/24px Verdana, Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	}
+
+th 	{
+	text-align: left;
+	background-color: #d6d6d6;
+	padding: 1px;
+	text-transform: uppercase;
+}
+td 	{
+	text-align: left;
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left: 2px;
+	border-color: #d0d0d0;
+	border-style: solid; 
+	border-width: 1px;
+}
+
+#primary_content tr:hover {
+	background-color: #FFFFCC;
+}
+
+
+
+
+/* ----------------------------
+		TABS
+------------------------------- */
+#tabs div h3 		{ margin-bottom: 10px;}
+#tabs div p 		{
+	line-height: 24px;
+	font-size: 12px;
+	color: #666666;
+}
+#tabs 				{
+	font-size: 100%;
+	margin-top: 0px;
+	margin-right: 0;
+	margin-bottom: 0px;
+	margin-left: 0;
+}
+#tabs ul 			{
+	float: left;
+	background: #fff;
+	width: 80%;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin: 0px;
+}
+#tabs li {
+	list-style: none;
+	padding: 0px;
+	height:100%;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-top-color: #d6d6d6;
+	border-right-color: #d6d6d6;
+	border-left-color: #d6d6d6;
+	margin-top: 0px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #d6d6d6;
+}
+
+#tabs ul li.active, #tabs li:hover 	{ background-color: #F5F5F5;}
+
+#tabs ul li.active a 				{ color: #333333;}
+#tabs li, #tabs li a 				{ float: left;}
+#tabs div {
+	clear: both;
+	min-height: 200px;
+	padding: 20px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #d6d6d6;
+	border-bottom-color: #d6d6d6;
+	border-left-color: #d6d6d6;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #d6d6d6;
+	margin-bottom: 20px;
+}
+
+#tabs ul li a 		{ text-decoration: none;padding: 8px;color: #7E7E7E;font-weight: bold;text-transform: uppercase;font-size: 11px;}
+
+
+/* ----------------------------
+		FORMS
+------------------------------- */
+.small			{ width: 15%;}
+.medium 		{ width: 35%;}
+.large			{ width: 75%;}
+.full			{width: 98%;}
+
+
+/*form  label 	{
+	font-weight: bold;
+	font-size: 13px;
+	margin-bottom: 3px;
+	display: block;
+	margin-top: 12px;
+}*/
+
+form  label 	{
+	font-size: 15px;
+}
+form p 			{
+	padding: 0px;
+	margin: 0px;
+}
+
+form .input {
+	margin-top: 0px;
+	margin-right: 10px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	border: 1px solid #CCCCCC;
+	padding: 7px;
+	background-color: #F3F3F3;
+	
+	}
+form select {
+	padding: 0px;
+	margin: 0px;
+}
+
+form .button	{
+	background-color: #D6D6D6;
+	color: #666666;
+	font-weight: bold;
+	border: 1px solid #CCCCCC;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+
+form .checkbox {
+	padding: 0px;
+	height: 15px;
+	width: 18px;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+}
+form .select	{
+	width: 20%;
+	padding: 2px;
+	margin: 0px;
+}
+form .radio		{
+	height: 15px;
+	width: 15px;
+	padding: 0px;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+}
+.styled_textarea				{
+	border: 1px solid #d6d6d6;
+	padding: 3px;
+	margin-bottom: 10px;
+	background-color: #F3F3F3;
+}
+input:focus, textarea:focus		{
+	background-color: #FFFFCC;
+	border: 1px solid #999999;
+}
+
+
+
+.paginator {
+	list-style : none;
+	display : block;
+	width:100%;
+	margin-top : 10px;
+	margin-right: 0;
+	margin-bottom: 10px;
+	margin-left: 0;
+	padding-top: 8px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+} 
+
+.paginator li {
+	display : inline;
+} 
+
+.paginator li a {
+
+	padding-top: 4px;
+	padding-right: 7px;
+	padding-bottom: 4px;
+	padding-left: 7px;
+} 
+
+.paginator li a:hover {
+	background-color: #d6d6d6;
+
+} 
+
+.paginator li.current a {
+	background-color: #d6d6d6;
+}
+
+/* ----------------------------
+		MODAL DIALOG
+------------------------------- */
+#modal h1 	{
+	font-size: 18px;
+	padding-bottom: 10px;
+	margin-top: 5px;
+	padding-top: 5px;
+	margin-bottom: 5px;
+	text-transform: uppercase;
+	letter-spacing: -1px;
+}
+#modal {
+	padding: 0px;
+}
+#modal p {
+	color: #666666;
+	font-size: 12px;
+}
+#modal hr {
+	color: #D4D0C8;
+}
+#modal .delete-link {
+	color: #0000FF;
+	font-size: 10px;
+}
+
+
+
+
+/* tables */
+table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+	margin-top: 10px;
+	margin-right: 0pt;
+	margin-bottom: 25px;
+	margin-left: 0pt;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #d6d6d6;
+	border: 1px solid #FFF;
+	font-size: 8pt;
+	padding: 4px;
+}
+table.tablesorter thead tr .header {
+	background-image: url(../img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	background-color: #FFF;
+	vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(../img/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(../img/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+	background-color: #B7B7B7;
+}
+
+/* Some custom edits.  there's probably better ways to do these... */
+.message {
+	color: #bb6666;
+}
+
+.proplist {
+	font-size: 12px;
+	padding: 0px;
+	line-height: 24px;
+	margin-top: -15px;
+	margin-right: 0px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	color: #666666;
+}
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }

@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-Sessions" extends="CONGO-main">
+
+	<action name="coconut/schedulingBrowse" class="com.stonekeep.congo.coconut.Sessions">
+		<interceptor-ref name="mystack" />
+		<result name="success">/WEB-INF/jsp/coconut/Scheduling.jsp</result>
+	</action>
+	
+	<action name="coconut/editSession" method="view" class="com.stonekeep.congo.coconut.Sessions">
+		<interceptor-ref name="pppstack" />
+		<result name="success">/WEB-INF/jsp/coconut/EditSessionForm.jsp</result>
+		<result name="exit"  type="redirectAction">coconut/Maintenance</result>
+	</action>
+	
+	<action name="coconut/updateSession" method="update" class="com.stonekeep.congo.coconut.Sessions">
+		<interceptor-ref name="pppstack" />
+		<result name="success" type="redirectAction">coconut/schedulingBrowse</result>
+		<result name="input">/WEB-INF/jsp/coconut/EditSessionForm.jsp</result>
+	</action>
+	
+	<action name="coconut/deleteSession" method="delete" class="com.stonekeep.congo.coconut.Sessions">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/schedulingBrowse</result>
+		<result name="input">/WEB-INF/jsp/coconut/Scheduling.jsp</result>
+	</action>
+	
+	<action name="coconut/createSession" method="create" class="com.stonekeep.congo.coconut.Sessions">
+		<interceptor-ref name="pppstack"/>
+		<result name="success" type="redirectAction">coconut/schedulingBrowse</result>
+	</action>
+
+	</package>
+</struts>

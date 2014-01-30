@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="CONGO-settings" extends="CONGO-main">
+
+	<action name="coconut/editSettings" class="com.stonekeep.congo.coconut.EditSettings">
+		<interceptor-ref name="admin" />
+		<interceptor-ref name="pppstack" />
+		<result name="success"  type="redirectAction">coconut/gotoMaintenance</result>
+		<result name="input">editSettings</result>
+		<result name="input">/WEB-INF/jsp/coconut/SystemSettingsForm.jsp</result>
+	</action>
+	
+	</package>
+</struts>

@@ -1,0 +1,196 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/util
+      http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+  <!--
+    The beans in this file deal primarily with making sure Congo is
+    properly configured and, if not, allowing it to be configured.
+  -->
+
+  <!--
+    Switch off the site (well, most of it) unless configuration
+    validation completes successfully. This checks per intercepted
+    action, due to mild Struts brain damage (it caches the interceptor
+    instance forever, rather than looking it up anew as needed). We
+    abuse some of the AOP features of spring to fool Struts (no real
+    AOP, though).
+  -->
+  <bean id="com.stonekeep.congo.config.ConfigGatewayInterceptor"
+    class="com.stonekeep.congo.interceptors.ToggleInterceptor" scope="prototype">
+    <property name="disabledResult" value="notconfigured"/>
+    <property name="enabled" ref="com.stonekeep.congo.config.IsConfigured"/>
+
+    <!--
+      Struts actually recieves an object that *looks up* the
+      interceptor, rather than the interceptor itself.
+    -->
+    <aop:scoped-proxy proxy-target-class="false"/>
+  </bean>
+
+  <!--
+    Supplies the session check interceptor *if* the site configured.
+    Otherwise, provides a passthrough.
+  -->
+  <bean id="com.stonekeep.congo.config.ConfiguredSessionChecker"
+    factory-bean="com.stonekeep.congo.config.SessionCheckStates"
+    factory-method="get">
+    <constructor-arg ref="com.stonekeep.congo.config.IsConfigured"/>
+    <aop:scoped-proxy proxy-target-class="false"/>
+  </bean>
+
+  <util:map id="com.stonekeep.congo.config.SessionCheckStates"
+    key-type="java.lang.Boolean" value-type="com.opensymphony.xwork2.interceptor.Interceptor">
+	<entry key="true">
+		<bean class="com.stonekeep.congo.interceptors.SessionChecker">
+			<constructor-arg ref="com.stonekeep.congo.dao.ConventionDAO" />
+			<constructor-arg ref="com.stonekeep.congo.dao.SettingDAO" />
+		</bean>
+	</entry>
+    <entry key="false">
+      <bean class="com.stonekeep.congo.interceptors.PassthroughInterceptor"/>
+    </entry>
+  </util:map>
+
+  <!-- 
+    Expose the config schema and the current config through to struts.
+   -->
+  <bean id="com.stonekeep.congo.config.ConfigSchema" class="com.stonekeep.congo.config.actions.StaticValue"
+    scope="request">
+    <constructor-arg value="config"/>
+    <constructor-arg>
+      <map>
+        <entry key="schema" value-ref="com.stonekeep.congo.config.Schema"/>
+        <entry key="current" value-ref="com.stonekeep.congo.config.CongoProperties"/>
+      </map>
+    </constructor-arg>
+    <constructor-arg value="success"/>
+  </bean>
+
+  <!-- Actions involved in reconfiguring the site. -->
+  <bean class="com.stonekeep.congo.coconut.SaveProperties" scope="request">
+    <constructor-arg ref="com.stonekeep.congo.config.Configurer"/>
+  </bean>
+
+  <!-- Service providers for actually reconfiguring the site. -->
+  <bean id="com.stonekeep.congo.config.Configurer"
+    class="com.stonekeep.congo.config.spring.ContextRefreshingConfigurer">
+    <constructor-arg>
+      <bean class="com.stonekeep.congo.config.ValidatingConfigurer">
+        <constructor-arg>
+          <bean class="com.stonekeep.congo.config.ResourceConfigurer">
+            <constructor-arg>
+              <bean factory-bean="com.stonekeep.congo.config.CongoConfigFile"
+                factory-method="getFile"/>
+            </constructor-arg>
+          </bean>
+        </constructor-arg>
+        <constructor-arg ref="com.stonekeep.congo.config.Validator"/>
+      </bean>
+    </constructor-arg>
+  </bean>
+
+  <!--
+    Deal with finding the config file location. This defaults to
+    ~/.congo, but will take the ${congo.home} property as an override,
+    without relying on configuration injection (which is unavailable
+    until after the config file has been loaded - circular problem).
+  -->
+  <bean id="com.stonekeep.congo.config.ConfigPath" class="com.stonekeep.congo.config.BootstrapPathFactoryBean">
+    <constructor-arg value="file:${user.home}/.congo/"/>
+    <constructor-arg value="congo.home"/>
+    <property name="contextParameter" value="congo.home" />
+  </bean>
+
+  <!--
+    Based on the config path, find the actual config file (if it
+    exists). This is analogous to the java snippet configFile =
+    configPath.createRelative("congo.properties");
+  -->
+  <bean id="com.stonekeep.congo.config.CongoConfigFile"
+    factory-bean="com.stonekeep.congo.config.ConfigPath" factory-method="createRelative">
+    <constructor-arg value="congo.properties"/>
+  </bean>
+
+  <!--
+    If there's no congo.properties in ${congo.home}, check the
+    classpath.
+  -->
+  <bean id="com.stonekeep.congo.config.ConfigFile"
+    class="com.stonekeep.congo.spring.ResourceIfExistsFactory">
+    <constructor-arg ref="com.stonekeep.congo.config.CongoConfigFile"/>
+    <constructor-arg value="classpath:congo.properties"/>
+  </bean>
+
+  <!-- 
+    Load the config file.
+  -->
+  <bean id="com.stonekeep.congo.config.CongoProperties"
+    class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <property name="location" ref="com.stonekeep.congo.config.ConfigFile"/>
+    <property name="ignoreResourceNotFound" value="true"/>
+  </bean>
+
+  <!-- And internal defaults... -->
+  <bean id="com.stonekeep.congo.config.Defaults"
+    class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <property name="location" value="classpath:defaults.properties"/>
+  </bean>
+
+  <!-- Finally, make congo's configuration values available to Spring. -->
+  <bean
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="propertiesArray">
+      <list>
+        <ref bean="com.stonekeep.congo.config.Defaults"/>
+        <ref bean="com.stonekeep.congo.config.CongoProperties"/>
+      </list>
+    </property>
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+  </bean>
+
+  <!-- Load the configuration schema from an XML file. -->
+  <bean id="com.stonekeep.congo.config.Schema" class="com.stonekeep.congo.spring.UnmarshallerFactory">
+    <constructor-arg
+      value="classpath:/com/stonekeep/congo/config/schema/xml/schema.xml"/>
+    <constructor-arg>
+      <bean
+        class="org.springframework.oxm.xstream.AnnotationXStreamMarshaller">
+        <property name="annotatedClass"
+          value="com.stonekeep.congo.config.schema.xml.ConfigurationSchemaDescription"/>
+      </bean>
+    </constructor-arg>
+
+    <property name="objectType"
+      value="com.stonekeep.congo.config.schema.xml.ConfigurationSchemaDescription"/>
+  </bean>
+
+  <!--
+    All the logic required to validate properties files as complete
+    config files - this is intended to provide a drop-in replacement
+    later when validation becomes less trivial.
+  -->
+  <bean id="com.stonekeep.congo.config.Validator"
+    class="com.stonekeep.congo.config.schema.xml.SchemaDescriptionValidator">
+    <constructor-arg ref="com.stonekeep.congo.config.Schema"/>
+  </bean>
+
+  <!--
+    A Boolean. Boolean.TRUE if CONGO's config is valid, Boolean.FALSE if
+    it's invalid or missing.
+  -->
+  <bean id="com.stonekeep.congo.config.IsConfigured" factory-bean="com.stonekeep.congo.config.Validator"
+    factory-method="validate">
+    <!--
+      The following "constructor args" are actually parameters to
+      validator.validate.
+    -->
+    <constructor-arg ref="com.stonekeep.congo.config.CongoProperties"/>
+  </bean>
+
+</beans>

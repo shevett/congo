@@ -1,0 +1,64 @@
+---------------
+$Id$
+---------------
+
+Terminology
+
+---------------
+
+Client
+	A host for convention.  A single Client may run multiple
+	individual conventions, or a single convention that recurs
+	each year.
+
+Convention
+	A Convention usually run once every year (other names might
+	be 'meeting' or 'convention').  It is the overarching term for
+	a gathering or meeting.
+
+Event
+	A scheduled meeting, talk, lecture, or happening at a specific
+	Convention.  Generally Conventions include many Events.
+
+Registrant
+	An attendee at a convention.  This can be guests, paid attendees,
+	or staffmembers.  In many cases a Registrant can be defined as
+	"Any person who gets a badge."
+
+Registration Type
+	Registrants attending conventions are generally registered under
+	a specific registration type, such as "Full" or "Guest" or
+	"Saturday Only".
+
+Subscribed
+	Because a Client may host multiple conventions, before a Registrant
+	can start working with a convention, they must be Subscribed to
+	it.  A Registrant starts the registration process by Subscribing
+	to the convention, and starting the regsitration process.  If
+	they do not complete registration, they may be Subscribed for a
+	time without being officially Registered.
+
+Registered
+	Once a Registrant has paid for their attendnace fee (or has been
+	given a free registration, colloquially known as 'comped') they
+	are considered 'Registered'.  
+
+	Note that Registered in general has nothign to do with whether
+	a Registrant is attending an Event or not, that is seperate.  This
+	is simply referring to "is this person allowed to attend the
+	convention"
+
+Badged
+	The purpose of CONGO is to allow badges to be printed for
+	Registrants.  Once a badge is printed, the Registrant is 
+	considered Badged.  Some conventions print badges ahead of time,
+	and Registrants may show up as Badged in that case even though
+	they haven't actually received a badge.
+	
+
+Checked In
+	Once a badge is issued to a Registrant, they are considered
+	Checked In.  This is concept allows a convention manager to
+	help determine no-shows, in particular for Conventiosn that
+	pre-print badges.
+
