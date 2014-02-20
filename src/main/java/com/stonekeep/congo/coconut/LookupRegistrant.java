@@ -37,6 +37,8 @@ public class LookupRegistrant implements Action, SessionAware {
 	@Override
 	public String execute() throws Exception {
 		int cid = ((Convention) sessionData.get("conference")).getConCID();
+		// Sanitize the input of spaces before trying to parse it
+		search = search.replaceAll("\\s","");
 		logger.debug("Searchbutton is " + searchbutton);
 		if (searchbutton != null) {
 			try {
