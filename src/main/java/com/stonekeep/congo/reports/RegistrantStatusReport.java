@@ -59,6 +59,7 @@ public class RegistrantStatusReport extends ActionSupport implements SessionAwar
 		int regtotal = 0;
 		int badgedtotal = 0;
 		int paidTotal = 0;
+		int unpaidTotal = 0;
 		int compedTotal = 0;
 		int estimatedRevenueTotal = 0;
 		BigDecimal calculatedRevenueTotal = new BigDecimal(0);
@@ -89,6 +90,9 @@ public class RegistrantStatusReport extends ActionSupport implements SessionAwar
 			} else {
 				paidTotal += regcount;
 			}
+			if (rt.getRegCost().intValue() == 0) {
+				unpaidTotal += regcount;
+			}
 			estimatedRevenueTotal += estimatedRevenue;
 			calculatedRevenueTotal = calculatedRevenueTotal.add(totalRevenue);
 			myReport.rows.add(rowdata);
@@ -106,8 +110,13 @@ public class RegistrantStatusReport extends ActionSupport implements SessionAwar
 		myReport.summary.add(sumdata);
 		
 		sumdata = new ArrayList<String>();
-		sumdata.add("Total standard registrations");
+		sumdata.add("Total standard (paid) registrations");
 		sumdata.add(String.valueOf(paidTotal));
+		myReport.summary.add(sumdata);
+
+		sumdata = new ArrayList<String>();
+		sumdata.add("Total unpaid (cost=0) registrations");
+		sumdata.add(String.valueOf(unpaidTotal));
 		myReport.summary.add(sumdata);
 		
 		sumdata = new ArrayList<String>();
