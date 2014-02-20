@@ -1,4 +1,5 @@
 *.class
+*.swp
 
 # Package Files #
 *.jar
@@ -7,3 +8,7 @@
 
 # subdirectories
 .idea/*
+.settings/*
+target/*
+.classpath
+.project

@@ -1,1 +1,6 @@
 language: java
+notifications:
+  irc:
+    channels:
+      - "irc.stonekeep.com#congo"
+
