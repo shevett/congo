@@ -35,14 +35,6 @@
 	<category name="com.stonekeep.congo.reports.AfterEventExport">
 		<priority value="INFO"/>
 	</category>
-			
-	<category name="com.stonekeep.congo.coconut.PrintBadge">
-		<priority value="INFO"/>
-	</category>
-
-	<category name="com.stonekeep.congo.util.SystemBadge">
-		<priority value="INFO"/>
-	</category>
 
 	<!--  this primarily controls container and environmental logging... -->
     <root>
