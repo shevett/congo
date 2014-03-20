@@ -29,8 +29,8 @@ import com.stonekeep.congo.util.SystemBadge;
 public class PrintBadge implements Action, SessionAware, ServletRequestAware {
 	private Logger logger = Logger.getLogger(PrintBadge.class);
 	public String printbutton= null;
-	public boolean printbadge = false;
-	public boolean checkin = false;
+	public boolean printbadge = true;
+	public boolean checkin = true;
 	public Map<String, Object> sessionData;
 	public List<Property> promptProperties;
 	private Map<String,Setting>settings;
@@ -115,18 +115,20 @@ public class PrintBadge implements Action, SessionAware, ServletRequestAware {
 			return "exit";
 		}
 		if (printbutton.equalsIgnoreCase("print")) {
-			// We are go to print.
-			SystemBadge sb = new SystemBadge();
-			sb.registrant = r;
-			sb.convention = c;
-			sb.tmpdir = tmpdir;
-			sb.imagedir = imagedir;
-			sb.printCommand = printcommand;
-			
-			Badge b = sb.generateBadge();
 
-			sb.badge = b;
 			if (printbadge) {
+				// We are go to print.
+				SystemBadge sb = new SystemBadge();
+				sb.registrant = r;
+				sb.convention = c;
+				sb.tmpdir = tmpdir;
+				sb.imagedir = imagedir;
+				sb.printCommand = printcommand;
+				
+				Badge b = sb.generateBadge();
+
+				sb.badge = b;
+				
 				logger.info("Calling SystemBadge.printIt() for " + r.firstName + " " + r.lastName + "(" + r.badgeName +")");
 				try {
 					sb.printIt();

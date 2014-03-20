@@ -36,7 +36,7 @@ public class LoadUser implements Action, SessionAware {
 	public String registeredText = "<a href=\"setupRegistration.action\" accesskey=\"G\">Re[<u>g</u>]ister...</a>";
 	public String voidRegistrationText = "<a href=\"VoidRegistrantForm\" accesskey=\"V\">[<u>V</u>]oid...</a>";
 	public String badgedText = "<a href=\"setupPrintBadge\" accesskey=\"P\">[<u>P</u>]rint badge...</a>";
-	public String checkedinText = "<a href=\"checkinRegistrant.action\" accesskey=\"C\">[<u>C</u>]heckin...</a>";
+	public String checkedinText = "<a href=\"setupPrintBadge.action\" accesskey=\"C\">[<u>C</u>]heckin...</a>";
 	public List<Property> propertyList = null;
 	
 	public int getCid() { return this.cid; } 
