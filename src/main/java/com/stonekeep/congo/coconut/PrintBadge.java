@@ -29,7 +29,7 @@ import com.stonekeep.congo.util.SystemBadge;
 public class PrintBadge implements Action, SessionAware, ServletRequestAware {
 	private Logger logger = Logger.getLogger(PrintBadge.class);
 	public String printbutton= null;
-	public boolean printbadge = true;
+	public boolean printbadge = false;
 	public boolean checkin = true;
 	public Map<String, Object> sessionData;
 	public List<Property> promptProperties;
