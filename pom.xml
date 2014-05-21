@@ -303,26 +303,12 @@
       
       <plugin>
  		<groupId>org.mortbay.jetty</groupId>
- 		<version>6.1.10</version>
  		<artifactId>jetty-maven-plugin</artifactId>
   		<configuration>
     		<scanIntervalSeconds>0</scanIntervalSeconds>
   		</configuration>
 	  </plugin>
 
-		<plugin>
-			<groupId>org.zeroturnaround</groupId>
-			<artifactId>jrebel-maven-plugin</artifactId>
-			<executions>
-				<execution>
-					<id>generate-rebel-xml</id>
-					<phase>process-resources</phase>
-					<goals>
-						<goal>generate</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
     </plugins>
   </build>
 
