@@ -61,6 +61,12 @@ public class MaintenanceChecker implements Action,SessionAware {
 			rset = p.executeQuery();
 			if (! rset.next()) { systemNotices.add("The default email template 'Email-1' is not defined for this event."); }
 
+			// Check to see if the templates needed are there...
+			p = c.prepareStatement("select * from templates where template_name='Link-1' and template_cid=?");
+			p.setInt(1,cid);
+			rset = p.executeQuery();
+			if (! rset.next()) { systemNotices.add("The default Link template 'Link-1' is not defined for this event."); }
+
 			// Do we have a 'Reminder-1' template?
 			p = c.prepareStatement("select * from templates where template_name='Reminder-1' and template_cid=?");
 			p.setInt(1,cid);
