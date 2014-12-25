@@ -67,6 +67,7 @@ public class Notices extends ActionSupport implements SessionAware {
 
 		myReport.title = "Notices Report";
 		myReport.titles.add("Registrant ID");
+		myReport.titles.add("Event ID");
 		myReport.titles.add("Name");
 		myReport.titles.add("Badgename");
 		myReport.titles.add("Type");
@@ -116,6 +117,7 @@ public class Notices extends ActionSupport implements SessionAware {
 		
 		String selectSql = "select * from reg_notes " +
 				"left outer join reg_master on reg_master.master_rid=reg_notes.note_rid " +
+				"where reg_master.master_rid > 0 " +
 				"order by master_lastname";
 		
 		PreparedStatement p = c.prepareStatement(selectSql);
