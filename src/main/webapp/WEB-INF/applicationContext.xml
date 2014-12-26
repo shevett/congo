@@ -360,9 +360,9 @@
 		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
 	</bean>
         
-	<context:property-placeholder location="file:/opt/congo/congo/congo.properties" ignore-resource-not-found="true"/>
-	<context:property-placeholder location="classpath:congo-${environment}.properties" ignore-resource-not-found="true"/>
-	<context:property-placeholder location="file:${propertiesfile}" ignore-resource-not-found="true"/>
+	<context:property-placeholder location="file:/opt/congo/congo/congo.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:congo-${environment}.properties" ignore-resource-not-found="true" ignore-unresolvable="true" />
+	<context:property-placeholder location="file:${propertiesfile}" ignore-resource-not-found="true" ignore-unresolvable="true" />
 	
 
 	<!-- Data sources -->
