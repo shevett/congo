@@ -10,3 +10,5 @@ notifications:
     template:
       - "A build has completed: %{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}  Details: %{build_url}"
 
+
+
