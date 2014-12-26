@@ -2,15 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
-    http://www.springframework.org/schema/beans
-      http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/aop
-      http://www.springframework.org/schema/aop/spring-aop.xsd
-    http://www.springframework.org/schema/util
-      http://www.springframework.org/schema/util/spring-util.xsd
-    http://www.springframework.org/schema/tx
-    	http://www.springframework.org/schema/tx/spring-tx.xsd"
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd"
 	default-lazy-init="true">
 
 	<!-- Configuration management and congo startup is detailed enough to deserve 
@@ -356,13 +359,10 @@
 		<constructor-arg ref="com.stonekeep.congo.dao.PhoneDAO" />
 		<constructor-arg ref="com.stonekeep.congo.dao.HistoryDAO" />
 	</bean>
-
-	<bean id="propertyPlaceholderConfigurer"
-		class="com.stonekeep.congo.config.LoggingPropertyPlaceholderConfigurer">
-<!-- 		<property name="locationUri" value="{servletContext.contextPath}/webServices" />
- -->		<property name="location" value="file:/opt/congo/#{servletContext.contextPath}/congo.properties" />
-	</bean>
-	
+        
+	<context:property-placeholder location="file:/opt/congo/congo/congo.properties" ignore-resource-not-found="true"/>
+	<context:property-placeholder location="classpath:congo-${environment}.properties" ignore-resource-not-found="true"/>
+	<context:property-placeholder location="file:${propertiesfile}" ignore-resource-not-found="true"/>
 	
 
 	<!-- Data sources -->
