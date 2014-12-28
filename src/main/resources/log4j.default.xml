@@ -21,7 +21,7 @@
 	 -->
 
 	<category name="com.stonekeep.congo">
-		<priority value="DEBUG"/>
+		<priority value="INFO"/>
 	</category>
 	
 	<category name="org.apache2.struts2">

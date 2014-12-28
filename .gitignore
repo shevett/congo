@@ -12,3 +12,7 @@
 target/*
 .classpath
 .project
+
+# Log files
+velocity.log
+velocity.log.1

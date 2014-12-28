@@ -82,7 +82,7 @@ public class Operations implements Action, Preparable, SessionAware {
 
 	@Override
 	public String execute() {
-		logger.info("Operations...");
+		logger.debug("Operations invoked...");
 		if (sessionData.containsKey("checkin")) {
 			checkin = (Boolean)sessionData.get("checkin");
 		}

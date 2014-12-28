@@ -113,9 +113,12 @@ public class SendMail implements Action,SessionAware {
 	public String preview() throws Exception {
 		// Load up a preview for the nice folks.
 		logger.debug("Setting up preview... (cid is " + cid + " c is " + c + ", template to render is " + selectedTemplate);
-		r = (r==null ? (Registrant)sessionData.get("workingregistrant") : r);
-		c = (c==null ? (Convention)sessionData.get("conference") : c);
+		
+		r = (Registrant)sessionData.get("workingregistrant");
+		c = (Convention)sessionData.get("conference");
+		
 		cid = c.getConCID();
+		logger.debug("Workingregistrant shows: # " + r.getRid() + " : " + r.getFirstName() + " " + r.getLastName());
 		
 		// Get list of templates and let them see them...
 		
@@ -227,6 +230,7 @@ public class SendMail implements Action,SessionAware {
 	
 	@Override
 	public void setSession(Map<String, Object> session) {
+		logger.debug("Session being set via setSession.");
 		this.sessionData = session;
 	}
 

@@ -10,6 +10,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.stonekeep.congo.dao.ConventionDAO;
 import com.stonekeep.congo.dao.SettingDAO;
 import com.stonekeep.congo.data.Convention;
+import com.stonekeep.congo.data.Registrant;
 
 
 /**
@@ -48,7 +49,6 @@ public class SessionChecker extends AbstractInterceptor {
 		sessionData = (Map)invocation.getInvocationContext().getContextMap().get("session");
 		String aClass = invocation.getInvocationContext().getActionInvocation().getAction().getClass().toString();
 		logger.debug(aClass);
-		logger.debug("Session map is " + sessionData.size() + " elements long.");
 		
 		sessionData.put("settings",settingDAO.listSettings());
 		
@@ -84,10 +84,20 @@ public class SessionChecker extends AbstractInterceptor {
 	}
 	
 	public void dumpMap(Map mp) {
+		logger.debug("----------------------------------------------------------------------------");
+		logger.debug("Session map is " + sessionData.size() + " elements long.");
 	    Iterator it = mp.entrySet().iterator();
+	    String message = null;
 	    while (it.hasNext()) {
 	        Map.Entry pairs = (Map.Entry)it.next();
-	        logger.debug("---> " + pairs.getKey() + " = " + pairs.getValue());
+	        if (pairs.getValue().getClass().getName().equals("com.stonekeep.congo.data.Registrant")) {
+	        	Registrant tmpReg = (Registrant)pairs.getValue();
+	        	message=tmpReg.getRid() + " " + tmpReg.getFirstName() + " " + tmpReg.getLastName();
+	        } else {
+	        	message=null;
+	        }
+	        logger.debug("---> " + pairs.getKey() + " = " + pairs.getValue() + " " + message);
 	    }
+		logger.debug("----------------------------------------------------------------------------");
 	}
 }

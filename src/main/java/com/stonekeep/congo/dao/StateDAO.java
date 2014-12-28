@@ -154,7 +154,7 @@ public class StateDAO {
 			} catch (Exception e) {
 				 //This is okay, it means there was a state record already for this.
 				logger.debug("Exception is " + e.getMessage());
-				logger.warn("Constraint violation - already have a state record here, this is okay.");
+				logger.warn("Constraint violation updating #" + rid + " - already have a state record here, this is okay.");
 			}
 		} finally {
 			Closer.close(null, p, c);
