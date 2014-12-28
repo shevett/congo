@@ -51,6 +51,7 @@
 							list="#{'CRAM-MD5':'CRAM-MD5','LOGIN':'LOGIN','PLAIN':'PLAIN','NONE':'NONE'}"
 							value="%{#session.settings.smtp_method.settingValue}"
 							name="smtp_method"/>
+					</td>
 				<tr>
 					<td>Authentication name</td>
 					<td>Some mailservers require authentication.</td> 
@@ -61,6 +62,15 @@
 					<td>Authentication password</td> 
 					<td><s:textfield name="smtp_password" value="%{#session.settings.smtp_password.settingValue}" size="30" /></td>
 				</tr>
+				<tr>
+					<td>Use TLS / STARTTLS?</td>
+					<td>Should we try to encrypt the mail connection?</td> 
+					<td><s:select label="useTLS"
+							list="#{'Yes':'Yes','No':'No'}"
+							value="%{#session.settings.smtp_tls.settingValue}"
+							name="smtp_tls"/>
+					</td>
+			</tr>
 				
 			</table>
 			<input type="submit" accesskey="S" name="savebutton" class="button" value="Save">

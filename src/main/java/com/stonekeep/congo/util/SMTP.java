@@ -30,6 +30,7 @@ public class SMTP extends AuthenticatingSMTPClient {
 	private String smtpusername;
 	private String smtppassword;
 	private String smtpauth;
+	private String smtptls;
 	private int cid;
 	
 	public void setcid(int whatcid) { cid=whatcid; }
@@ -59,8 +60,19 @@ public class SMTP extends AuthenticatingSMTPClient {
 		try {
 			setDefaultPort(smtpport);	// Still need to enable authentication here.
 			int reply;
-			logger.debug("Connecting to " + smtpserver + " on port " + smtpport + "...");
+			logger.debug("Connecting to " + smtpserver + " on port " + smtpport + " via methodology " + smtpauth + " ...");
 			connect(smtpserver);
+			logger.debug(getReplyString());
+			if (smtptls.equalsIgnoreCase("Yes")) {
+				logger.debug("Attempting to do a STARTTLS...");
+				execTLS();
+				logger.debug(getReplyString());
+			} else {
+				logger.debug("Skipping STARTTLS attempt due to mail settings configuration.");
+			}
+
+			logger.debug("Saying EHLO....");
+			ehlo("localhost");
 			logger.debug(getReplyString());
 			if (! smtpauth.equals("NONE")) {
 				logger.debug("Authenticating using methodology " + smtpauth);
@@ -68,7 +80,7 @@ public class SMTP extends AuthenticatingSMTPClient {
 				if (auth(m, smtpusername, smtppassword)) {
 					logger.debug("Authentication successful!");
 				} else {
-					message = "SMTP Authentication to " + smtpserver + " using " + smtpauth + " failed.  Cannot proceed.";
+					message = "SMTP Authentication to " + smtpserver + " using " + smtpauth + " failed.  Cannot proceed.  Message is " + getReplyString();
 					logger.error(message);
 					throw new IOException(message);
 				}
@@ -273,6 +285,7 @@ public class SMTP extends AuthenticatingSMTPClient {
 		smtpauth = settings.get("smtp_method").getSettingValue();
 		smtpusername = settings.get("smtp_username").getSettingValue();
 		smtppassword = settings.get("smtp_password").getSettingValue();
+		smtptls = settings.get("smtp_tls").getSettingValue();
 		
 	}
 
