@@ -72,8 +72,8 @@ public class Login implements Action, SessionAware {
 			r = registrantDAO.getByID(possibleRID);
 		} catch (NumberFormatException e) {
 			// The username field must be textual, find it...
-			logger.debug("Searchbybadgename - looking for " + username);
-			r = registrantDAO.searchByBadgeName(username);
+			logger.debug("Searchbyexactbadgename - looking for " + username);
+			r = registrantDAO.searchByExactBadgeName(username);
 			logger.debug("results of search are " + r);
 			
 			if (r == null) {

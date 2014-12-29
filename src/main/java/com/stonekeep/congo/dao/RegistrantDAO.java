@@ -278,6 +278,26 @@ public class RegistrantDAO {
 		return r;
 	}
 
+	public Registrant searchByExactBadgeName(String bn) throws SQLException {
+		Connection c = dataSource.getConnection();
+		PreparedStatement p = null;
+		Registrant r = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * from reg_master WHERE master_badgename = ?";
+			p = c.prepareStatement(sql);
+			p.setString(1, bn);
+			rs = p.executeQuery();
+			if (rs.next()) {
+				r = new Registrant();
+				loadSimple(r, rs);
+			}
+		} finally {
+			Closer.close(rs, p, c);
+		}
+		return r;
+	}
+
 	public Registrant searchbyEmail(String em) throws SQLException {
 		logger.debug("Searching for email address " + em);
 		Connection c = dataSource.getConnection();
