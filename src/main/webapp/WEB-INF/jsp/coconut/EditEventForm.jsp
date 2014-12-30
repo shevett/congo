@@ -122,7 +122,7 @@
 	/* Reset the contents of the badge layout to some basic default */
 	function badgeReset() {
 		s = "<badge>\n";
- 		s += '\t<field name="lname posx="120" posy="100"/>\n';
+ 		s += '\t<field name="lname" posx="120" posy="100"/>\n';
  		s += '\t<field name="fname" posx="122" posy="100"/>\n';
  		s += '\t<field name="badgename" posx="120" posy="75" fontsize="18" align="block" width="40" height="30"/>\n';
  		s += '\t<field name="company" posx="120" posy="50" fontsize="12"/>\n';
