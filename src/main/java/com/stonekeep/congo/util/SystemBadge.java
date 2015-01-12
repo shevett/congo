@@ -106,6 +106,45 @@ public class SystemBadge {
 				}
 				printElement = printElement + " " + registrant.getLastName();
 			}
+			
+			// Badge or First Last - Prints badge if exists, else First Last
+			if (fname.equalsIgnoreCase("badgeorfnln")){
+				if (registrant.getBadgeName().length() > 0) {
+					printElement = registrant.getBadgeName();
+				} else {
+					printElement = registrant.getFirstName() + " " + registrant.getLastName();
+				}
+			}
+
+			// Badge or Last, First - Prints Badgename if exists, else Last, First
+			if (fname.equalsIgnoreCase("badgeorlnfn")){
+				if (registrant.getBadgeName().length() > 0) {
+					printElement = registrant.getBadgeName();
+				} else {
+					printElement = registrant.getLastName() + ", " + registrant.getFirstName();
+				}
+			}
+
+			// First Last if Badge - Prints First Last if Badgename exists, else blank
+			if (fname.equalsIgnoreCase("fnlnifbadge")){
+				if (registrant.getBadgeName().length() > 0) {
+					printElement = registrant.getFirstName() + " " + registrant.getLastName();
+				} else {
+					printElement = "";
+				}
+			}
+		
+			// Last, First if Badge - Prints Last, First if Badgename exists, else blank
+			if (fname.equalsIgnoreCase("lnfnifbadge")){
+				if (registrant.getBadgeName().length() > 0) {
+					printElement = registrant.getLastName() + ", " + registrant.getFirstName();
+				} else {
+					printElement = "";
+				}
+			}
+			
+			
+
 
 			// Background graphic images (note schema doesn't support this at the moment)
 			if (fname.equalsIgnoreCase("image"))	{

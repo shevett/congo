@@ -99,7 +99,16 @@
 							&lt;field name="regtype" posx="210" posy="135"/&gt;<br>
 						&lt;/badge&gt;<br>
 						Click <a href="#badge" onclick="badgeReset()">here</a> to reset to a default layout.<br>
-						(You can also use 'fnbnln' as a field name for the badgename to be in quotes between fn and ln)
+						<p>You can also use as fields:
+						 <ul>
+							<li>'fnamelname' to print the name as 'first last'</li>
+							<li>'fnbnln' to print the badgename to be in quotes between fn and ln></li>
+							<li>'badgeorfnln' to print the badgename if it exists, otherwise fn ln</li>
+							<li>'badgeoflnfn' to print the badgename if it exists, otherwise ln, fn</li>
+							<li>'fnlnifbadge' to print fn ln only if the badgename exists</li>
+							<li>'lnfnifbadge' to print ln, fn only if the badgename exists</li>
+						</ul>
+						</p>
 					</td>
 				</tr>
 			</table>
