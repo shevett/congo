@@ -223,7 +223,10 @@ public class SystemBadge {
 							printElement + " " +
 							printElement + " " +
 							printElement,btFont);
-			} else {
+			} else if (br.getAlignment().equalsIgnoreCase("block")) {  // For block elements, use size as specified
+				blockText = new Phrase(15,printElement,btFont);
+				
+			} else { // for all other elements, shrink to fit them in the space available
 				float maxWidth;
 				if(br.getMaxWidth() == 0 || br.getMaxWidth() > 233){
 					maxWidth = 233; // 5pt minimum margins
