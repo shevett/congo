@@ -45,6 +45,19 @@ public class BadgeRow {
     public void setAlignment(String a) {
     	this.alignment=a;
     }
+    
+    public void setStyle(String s){
+    	this.style=s;
+    }
+    public void setFont(String f){
+    	this.font=f;
+    }
+    public void setFontEncoding(String f){
+    	this.fontEncoding=f;
+    }
+    public void setMaxWidth(float w){
+    	this.maxWidth = w;
+    }
 
     private int cid;
     private String badgeIdentifier;
@@ -58,6 +71,10 @@ public class BadgeRow {
     private String backgroundImage;
     private String alignment;
     private int fontsize;
+    private String fontEncoding;
+    private String font;
+    private String style;
+    private float maxWidth;
 
 	public int getCid() { 
 		return this.cid;
@@ -90,6 +107,10 @@ public class BadgeRow {
     public int getFontSize() {
     	return this.fontsize;
     }
+    
+    public String getStyle(){
+    	return this.style;
+    }
 
 	public int getWidth() {
 		return this.width;
@@ -102,4 +123,14 @@ public class BadgeRow {
 	public String getAlignment() {
 		return this.alignment;
 	}
+	public String getFont(){
+		return this.font;
+	}
+	public String getFontEncoding(){
+		return this.fontEncoding;
+	}
+	public float getMaxWidth(){
+		return this.maxWidth;
+	}
+
 }

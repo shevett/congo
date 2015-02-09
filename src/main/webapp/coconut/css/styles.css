@@ -633,3 +633,15 @@ IMG.displayed {
     display: block;
     margin-left: auto;
     margin-right: auto }
+
+#eventTable td{
+	vertical-align: top;
+	padding:5px;
+}
+
+#eventTable ul{
+	list-style: initial;
+}	
+#eventTable li{
+	margin-left:20px;
+}

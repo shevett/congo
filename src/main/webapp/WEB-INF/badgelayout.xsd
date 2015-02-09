@@ -15,6 +15,10 @@
 							<xs:attribute name="height" type="xs:int" />
 							<xs:attribute name="fontsize" type="xs:int" />
 							<xs:attribute name="angle" type="xs:int" default="90" />
+							<xs:attribute name="style" type="xs:string" default="normal" />
+							<xs:attribute name="font" type="xs:string" default="helvetica" />
+							<xs:attribute name="fontencoding" type="xs:string" default="CP1252" />
+							<xs:attribute name="maxwidth" type="xs:float" />
 						</xs:complexType>
 					</xs:element>
 

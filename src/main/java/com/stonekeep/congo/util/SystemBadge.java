@@ -1,11 +1,13 @@
 package com.stonekeep.congo.util;
 
 import java.io.BufferedReader;
+
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.io.File;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -79,7 +81,7 @@ public class SystemBadge {
 		String printElement;
 		String fname;
 
-		BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+		
 
 		logger.info("Generating " + outputFile + " using " + badge.getBadgeRows().size() + " fields.");
 		for (BadgeRow br : badge.getBadgeRows() ) {
@@ -160,11 +162,59 @@ public class SystemBadge {
 
 			logger.debug("Locating field " + fname + " which has value " + 
 					printElement + " at position " + br.getPosx() + "," + br.getPosy() + ", aligned: " + br.getAlignment());
-
+			
+			BaseFont bf;
+			
+			// Pick a font for the element
+			if (br.getFont() == null || br.getFont().isEmpty()){ // default to Helvetica
+				bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			} else if (br.getFont().equalsIgnoreCase("helvetica")){
+				bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			} else if (br.getFont().equalsIgnoreCase("courier")){
+				bf = BaseFont.createFont(BaseFont.COURIER, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			} else if (br.getFont().equalsIgnoreCase("times")){
+				bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			} else {
+				File f = new File(br.getFont());
+				if(f.exists() && !f.isDirectory()){ 
+					bf = BaseFont.createFont(br.getFont(), BaseFont.CP1252, BaseFont.EMBEDDED);
+				} else {
+					logger.info("Using the default font, as the user-specified one can not be located");
+					bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+				}
+			}
+			logger.debug("Using font: " + (bf.getFullFontName())[0][3]);
+			
 			Font btFont;
 			Phrase blockText = null;
-			// Banner text is a little more showy...
-			if (fname.equalsIgnoreCase("banner")) {
+			
+			// Pick a style for the element
+			if (br.getStyle().equalsIgnoreCase("bold")){
+				btFont = new Font(bf,br.getFontSize(),Font.BOLD);
+				logger.debug("Using bold style");
+				
+			} else if (br.getStyle().equalsIgnoreCase("italic")){
+				btFont = new Font(bf,br.getFontSize(),Font.ITALIC);
+				logger.debug("Using italic style");
+				
+			} else if (br.getStyle().equalsIgnoreCase("bolditalic")){
+				btFont = new Font(bf,br.getFontSize(),Font.BOLDITALIC);
+				logger.debug("Using bolditalic style");
+				
+			} else if (br.getStyle().equalsIgnoreCase("strikethru")){
+				btFont = new Font(bf,br.getFontSize(),Font.STRIKETHRU);
+				logger.debug("Using strikethrough style");
+				
+			} else if (br.getStyle().equalsIgnoreCase("underline")){
+				btFont = new Font(bf,br.getFontSize(),Font.UNDERLINE);
+				logger.debug("Using underline style");
+			
+			} else {
+				btFont = new Font(bf,br.getFontSize(),Font.NORMAL);
+				logger.debug("Using default style");
+			}
+			
+			if (fname.equalsIgnoreCase("banner")) { // Banner text is a little more showy...
 				btFont = new Font(bf,br.getFontSize(),Font.BOLD);
 				// this is a little ugly.
 				if (printElement != null) 
@@ -174,8 +224,17 @@ public class SystemBadge {
 							printElement + " " +
 							printElement,btFont);
 			} else {
-				btFont = new Font(bf,br.getFontSize(),Font.NORMAL);
-				blockText = new Phrase(15,printElement,btFont);
+				float maxWidth;
+				if(br.getMaxWidth() == 0 || br.getMaxWidth() > 233){
+					maxWidth = 233; // 5pt minimum margins
+				} else {
+					maxWidth = br.getMaxWidth();
+				}
+				do {
+					blockText = new Phrase(15,printElement,btFont);
+					btFont.setSize(btFont.getCalculatedSize() - (float)0.25);
+				} while (ColumnText.getWidth(blockText) > maxWidth); // 12pt padding on each side, just in case
+				logger.debug("Using a fontsize of " + (btFont.getCalculatedSize() + 0.25));
 			}
 			int alignment = 0;
 
@@ -236,6 +295,7 @@ public class SystemBadge {
 					br.setPosy(Integer.parseInt(el.getAttributeByName(new javax.xml.namespace.QName("posy")).getValue()));
 					br.setFontSize(10);	// an arbitrary default font size.
 					br.setAlignment("center"); // A working default.
+					br.setStyle("normal"); // default;
 
 					Attribute a = el.getAttributeByName(new javax.xml.namespace.QName("fontsize"));
 					if (a != null) 	br.setFontSize(Integer.parseInt(a.getValue()));
@@ -248,6 +308,18 @@ public class SystemBadge {
 
 					a = el.getAttributeByName(new javax.xml.namespace.QName("align"));
 					if (a != null) 	br.setAlignment(el.getAttributeByName(new javax.xml.namespace.QName("align")).getValue());
+					
+					a = el.getAttributeByName(new javax.xml.namespace.QName("style"));
+					if (a != null) br.setStyle(el.getAttributeByName(new javax.xml.namespace.QName("style")).getValue());
+					
+					a = el.getAttributeByName(new javax.xml.namespace.QName("font"));
+					if (a != null) br.setFont(el.getAttributeByName(new javax.xml.namespace.QName("font")).getValue());
+					
+					a = el.getAttributeByName(new javax.xml.namespace.QName("fontencoding"));
+					if (a != null) br.setFontEncoding(el.getAttributeByName(new javax.xml.namespace.QName("fontencoding")).getValue());
+					
+					a = el.getAttributeByName(new javax.xml.namespace.QName("maxwidth"));
+					if (a != null) br.setMaxWidth(Float.parseFloat(a.getValue()));
 
 
 					logger.debug("Parsed field '" + br.getFieldname() + "' to position " + br.getPosx() + "," + br.getPosy());

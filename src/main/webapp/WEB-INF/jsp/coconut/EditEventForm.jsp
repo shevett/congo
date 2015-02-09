@@ -24,14 +24,14 @@
 			<div class="message">
 				${message}
 			</div>
-			<table>
+			<table id="eventTable">
 				<tr>
 					<td>Name:</td>
-					<td width=45%><s:textfield name="workingEvent.conName" size="60" /></td>
+					<td width=45%><s:textfield name="workingEvent.conName" size="80" /></td>
 				</tr>
 				<tr>
 					<td>Location:</td>
-					<td width=45%><s:textfield name="workingEvent.conLocation" size="60" /></td>
+					<td width=45%><s:textfield name="workingEvent.conLocation" size="80" /></td>
 				</tr>
 				<tr>
 					<td>Start Date:<br>yyyy-mm-dd</td>
@@ -52,26 +52,26 @@
 					</td>
 				<tr>
 					<td>Description / Tagline / Comment:</td>
-					<td width=45%><s:textfield name="workingEvent.conComment" size="60" /></td>
+					<td width=45%><s:textfield name="workingEvent.conComment" size="80" /></td>
 				</tr>
 				<tr>
 					<td>Website URL:</td>
-					<td width=45%><s:textfield name="workingEvent.conWebsite" size="60" /></td>
+					<td width=45%><s:textfield name="workingEvent.conWebsite" size="80" /></td>
 				</tr>
 				<tr>
 					<td>Contact Email:</td>
-					<td width=45%><s:textfield name="workingEvent.conEmail" size="60" /></td>
+					<td width=45%><s:textfield name="workingEvent.conEmail" size="80" /></td>
 				</tr>
 				<tr valign="top">
 					<td>Description Block:<br>May be as detailed and HTML-full as needed</td>
 					<td width=45%>
-						<s:textarea name="workingEvent.conDescription" rows="5" cols="60"/>
+						<s:textarea name="workingEvent.conDescription" rows="10" cols="80"/>
 					</td>
 				</tr>
 				<tr valign="top">
 					<td>Stylesheet:</td>
 					<td width=45%>
-						<s:textarea name="workingEvent.conStylesheet" rows="5" cols="60"/>
+						<s:textarea name="workingEvent.conStylesheet" rows="10" cols="80"/>
 					</td>
 					<td width="40%">
 						Stylesheet styles:<br>
@@ -81,10 +81,10 @@
 				<tr valign="top">
 					<td>Badge Layout:<br>Define how a badge will be printed.  See docs!</td>
 					<td width=45%>
-						<s:textarea id="badge" name="workingEvent.conBadgelayout" rows="10" cols="60"/>
+						<s:textarea id="badge" name="workingEvent.conBadgelayout" rows="20" cols="80"/>
 					</td>
 					<td width="40%">
-						<a name="#badge"/>
+						<a name="#badge"></a>
 						Badge layout is defined using XML.  Example:<br>
 						&lt;badge&gt;<br>
 							&lt;image filename="/tmp/foo.tif" posx="0" posy="10" height="50" width="150"/&gt;<br>
@@ -99,15 +99,43 @@
 							&lt;field name="regtype" posx="210" posy="135"/&gt;<br>
 						&lt;/badge&gt;<br>
 						Click <a href="#badge" onclick="badgeReset()">here</a> to reset to a default layout.<br>
-						<p>You can also use as fields:
-						 <ul>
-							<li>'fnamelname' to print the name as 'first last'</li>
-							<li>'fnbnln' to print the badgename to be in quotes between fn and ln></li>
-							<li>'badgeorfnln' to print the badgename if it exists, otherwise fn ln</li>
-							<li>'badgeoflnfn' to print the badgename if it exists, otherwise ln, fn</li>
-							<li>'fnlnifbadge' to print fn ln only if the badgename exists</li>
-							<li>'lnfnifbadge' to print ln, fn only if the badgename exists</li>
-						</ul>
+						<p>Field Attributes:
+							<ul>
+								<li>"name" - sets the field type
+									<ul>
+										<li>"lname" - Last name</li>
+										<li>"fname" - First name</li>
+										<li>"fnamelname" - First Last</li>
+										<li>"lnamefname" - Last, First</li>
+										<li>"badgename" - Badgename field</li>
+										<li>"company" - Company field</li>
+										<li>"id" - User ID</li>
+										<li>"regtype" - Registration Type</li>
+										<li>"fnbnln" - First Badgename Last</li>
+										<li>"badgeorfnln" - Badgename if it exists, else First Last</li>
+										<li>"badgeorlnfn" - Badgename if it exists, else Last, First</li>
+										<li>"fnlnifbadge" - First Last only if Badgename exists</li>
+										<li>"fnlnifbadge" - Last, First only if Badgename exists</li>
+									</ul>
+								</li> 
+
+								<li>"posx" - sets the field's horizontal position on the badge</li>
+								<li>"posy" - sets the field's vertical position on the badge</li>
+								<li>"maxwidth" - sets the field's maximum width (default / maximum 233)</li>
+								<li>"fontsize" - sets default fontsize for the field.  If the field would be larger than maxwidth, the font is lowered in 0.25 pt increments until it fits</li>
+								<li>"align" - sets alignment of the field: "left", "center", "right", "block"</li>
+								<li>"width" - sets width for block alignment</li>
+								<li>"height" - sets height for block alignment</li>
+								<li>"style" - sets style for field: "bold", "italic", "bolditalic", "strikethrough", "underline"</li>
+								<li>"font" - sets font for field:
+									<ul>
+										<li>"helvetica" - Use Helvetica</li>
+										<li>"times" - Use Times New Roman</li>
+										<li>"courier" - Use Courier New</li>
+										<li>"/path/to/font/file" - use user-specified font, fall back to Helvetica if the path is invalid</li>
+									</ul>
+								</li>
+							</ul>
 						</p>
 					</td>
 				</tr>
