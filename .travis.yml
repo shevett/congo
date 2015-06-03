@@ -16,6 +16,6 @@ deploy:
   provider: heroku
   api_key:
     secure: I3Xn7IJkPhrEdmOMiDU9sudBJiHLcM0bJIKDWvM/d+VyerpwEh09yOBafJT/VmBkwwjFsPRtI/62Pd353QZFJiZG9QpEn8RNDBFTRqemkmQxgNuCuSxM6AiGxRWl7Cz++heL2L3b6h77Pev/QJN/Y947WrMzrTCk0MvxTyMhd2M=
-  app: congo
+  app: congo-event-manager
   on:
     repo: shevett/congo
