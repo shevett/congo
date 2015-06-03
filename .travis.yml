@@ -2,13 +2,20 @@ language: java
 notifications:
   irc:
     channels:
-      - "irc.stonekeep.com#congo"
-      - "irc.stonekeep.com#arisia"
-    on_success: [always|never|change] # default: always
-    on_failure: [always|never|change] # default: always
+    - irc.stonekeep.com#congo
+    - irc.stonekeep.com#arisia
+    on_success:
+    - always|never|change
+    on_failure:
+    - always|never|change
     use_notice: true
     template:
-      - "A build has completed: %{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}  Details: %{build_url}"
-
-
-
+    - 'A build has completed: %{repository}#%{build_number} (%{branch} - %{commit}
+      : %{author}): %{message}  Details: %{build_url}'
+deploy:
+  provider: heroku
+  api_key:
+    secure: I3Xn7IJkPhrEdmOMiDU9sudBJiHLcM0bJIKDWvM/d+VyerpwEh09yOBafJT/VmBkwwjFsPRtI/62Pd353QZFJiZG9QpEn8RNDBFTRqemkmQxgNuCuSxM6AiGxRWl7Cz++heL2L3b6h77Pev/QJN/Y947WrMzrTCk0MvxTyMhd2M=
+  app: congo
+  on:
+    repo: shevett/congo
