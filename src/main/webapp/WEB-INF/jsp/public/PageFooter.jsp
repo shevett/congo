@@ -3,7 +3,7 @@
 		<tr>
 			<td>
 				CONGO Event Management | 
-				&copy; 2012 Stonekeep Consulting, Inc
+				&copy; 2015 Stonekeep Consulting, Inc
 			</td>
 			<td align="right">
 				<a href="mailto:${sessionScope.currentConvention.conEmail }">${sessionScope.currentConvention.conEmail }</a>

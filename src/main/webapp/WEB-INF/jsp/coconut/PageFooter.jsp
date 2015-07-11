@@ -6,7 +6,7 @@
 
 <div id="footer">
 	CONGO v<mvn:version groupId="com.stonekeep.congo" artifactId="congo" />
-	&copy;2012 Stonekeep Consulting, Inc.  All rights reserved<br/>
+	&copy;2015 Stonekeep Consulting, Inc.  All rights reserved<br/>
 	<c:choose>
 		<c:when test="${registered}">
 			Enterprise Edition - Registered to ${keyname}
