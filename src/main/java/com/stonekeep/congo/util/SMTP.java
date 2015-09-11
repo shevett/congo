@@ -60,7 +60,7 @@ public class SMTP extends AuthenticatingSMTPClient {
 		try {
 			setDefaultPort(smtpport);	// Still need to enable authentication here.
 			int reply;
-			logger.debug("Connecting to " + smtpserver + " on port " + smtpport + " via methodology " + smtpauth + " ...");
+			logger.debug("Connecting to " + smtpserver + " on port " + smtpport + " via methodology " + smtpauth + ".  Use TLS is " + smtptls + " ...");
 			connect(smtpserver);
 			logger.debug(getReplyString());
 			if (smtptls.equalsIgnoreCase("Yes")) {
@@ -72,7 +72,7 @@ public class SMTP extends AuthenticatingSMTPClient {
 			}
 
 			logger.debug("Saying EHLO....");
-			ehlo("localhost");
+			ehlo("arisia.org");
 			logger.debug(getReplyString());
 			if (! smtpauth.equals("NONE")) {
 				logger.debug("Authenticating using methodology " + smtpauth);
