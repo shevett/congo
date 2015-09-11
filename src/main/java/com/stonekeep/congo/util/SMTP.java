@@ -162,6 +162,15 @@ public class SMTP extends AuthenticatingSMTPClient {
 			logger.debug("Connecting to " + smtpserver + " on port " + smtpport + "...");
 			connect(smtpserver);
 			logger.info(getReplyString());
+			if (smtptls.equalsIgnoreCase("Yes")) {
+				logger.debug("Attempting to do a STARTTLS...");
+				execTLS();
+				logger.debug(getReplyString());
+			} else {
+				logger.debug("Skipping STARTTLS attempt due to mail settings configuration.");
+			}
+			logger.debug("Saying EHLO....");
+			ehlo("arisia.org");
 			if (! smtpauth.equals("NONE")) {
 				logger.debug("Authenticating using methodology " + smtpauth);
 				AuthenticatingSMTPClient.AUTH_METHOD m = AuthenticatingSMTPClient.AUTH_METHOD.valueOf(smtpauth);
