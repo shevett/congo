@@ -1,17 +1,4 @@
 language: java
-notifications:
-  irc:
-    channels:
-    - irc.stonekeep.com#congo
-    - irc.stonekeep.com#arisia
-    on_success:
-    - always|never|change
-    on_failure:
-    - always|never|change
-    use_notice: true
-    template:
-    - 'A build has completed: %{repository}#%{build_number} (%{branch} - %{commit}
-      : %{author}): %{message}  Details: %{build_url}'
 deploy:
   provider: heroku
   api_key:
